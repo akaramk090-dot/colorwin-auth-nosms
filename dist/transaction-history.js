@@ -1,0 +1,26 @@
+(() => {
+ 'use strict';
+ const labels={game_bet:'Game bet',game_win:'Game winnings',game_refund:'Bet cancelled',deposit:'Deposit',gift:'Gift reward',attendance:'Attendance bonus',welcome_bonus:'Welcome bonus',withdrawal_reserve:'Withdrawal',withdrawal_refund:'Withdrawal refund',tournament_entry:'Tournament entry',tournament_reward:'Tournament reward',rebate:'Betting rebate',admin_adjustment:'Wallet adjustment'};
+ const label=value=>labels[value]||String(value).replace(/_/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
+ const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const money=value=>'₹'+Number(value||0).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2});
+ const time=value=>new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Kolkata',year:'numeric',month:'short',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}).format(new Date(value));
+ const empty=()=>'<div class="tx-empty"><img class="cw-no-data-art" src="assets/no-data.svg" alt="" aria-hidden="true"><p>No data</p></div>';
+ const chevron='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>';
+ function card(row){const credit=Number(row.amount)>0;return `<article class="tx-card"><h2>${esc(label(row.source))}</h2><dl><div><dt>Detail</dt><dd>${esc(label(row.source))}</dd></div><div><dt>Time (IST)</dt><dd>${esc(time(row.created_at))}</dd></div><div><dt>Amount</dt><dd class="${credit?'tx-credit':'tx-debit'}">${credit?'+':'−'}${money(Math.abs(Number(row.amount)))}</dd></div></dl></article>`;}
+ function view(){return `<section class="transaction-page"><header class="tx-header"><a href="#/account" aria-label="Go back"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7"/></svg></a><h1>Transaction history</h1><span></span></header><main class="tx-content"><div class="tx-filters"><button type="button" id="tx-type" class="tx-filter-button" aria-label="Transaction type" aria-haspopup="dialog"><span id="tx-type-label">All</span>${chevron}</button><div class="tx-date-filter"><button type="button" id="tx-date" class="tx-filter-button" aria-label="Choose a date" aria-haspopup="dialog"><span id="tx-date-label">Choose a date</span>${chevron}</button><button type="button" id="tx-date-clear" aria-label="Clear date filter" hidden>×</button></div></div><p class="tx-status" role="status">Loading transactions…</p><div id="tx-records"></div><button type="button" class="tx-more" id="tx-more" hidden>Load more</button></main></section>`;}
+ function bind(){const page=document.querySelector('.transaction-page'),auth=window.ColorWinAuth,user=auth.session?.user?.id;const list=page.querySelector('#tx-records'),status=page.querySelector('.tx-status'),type=page.querySelector('#tx-type'),date=page.querySelector('#tx-date'),more=page.querySelector('#tx-more');let rows=[],cursor=null,version=0,selectedType='all',selectedDate='',types=[];
+  const current=request=>page.isConnected&&auth.session?.user?.id===user&&request===version;
+  async function load(append=false){const request=++version;more.disabled=true;status.textContent='Loading transactions…';if(!append){rows=[];cursor=null;list.innerHTML='';more.hidden=true;}
+   try{const data=user==='preview'?{rows:[],types:[],has_more:false}:await auth.accountRpc('colorwin_transaction_history',{p_type:selectedType,p_date:selectedDate||null,p_cursor:append?cursor:null});if(!current(request))return;
+    types=data.types;
+    const seen=new Set(rows.map(row=>row.id));rows=append?rows.concat(data.rows.filter(row=>!seen.has(row.id))):data.rows;cursor=data.cursor;list.innerHTML=rows.length?rows.map(card).join(''):empty();more.hidden=!data.has_more;status.textContent=rows.length?`${rows.length} transactions shown`:'';
+   }catch(error){if(!current(request))return;status.textContent=error.message||'Unable to load transactions.';const retry=document.createElement('button');retry.type='button';retry.textContent='Retry';retry.onclick=()=>void load(append);status.append(' ',retry);
+   }finally{if(current(request))more.disabled=false;}
+  }
+  type.onclick=()=>{const options=[['all','All'],['credit','Credits'],['debit','Debits'],...types.map(value=>[value,label(value)])];window.ColorWinWallet.sheet(page,'Transaction type',options.map(item=>item[1]),options.find(item=>item[0]===selectedType)?.[1]||'All',value=>{selectedType=options.find(item=>item[1]===value)?.[0]||'all';page.querySelector('#tx-type-label').textContent=value;void load();});};
+  const applyDate=value=>{selectedDate=value;page.querySelector('#tx-date-label').textContent=value||'Choose a date';page.querySelector('#tx-date-clear').hidden=!value;void load();};
+  date.onclick=()=>{const parts=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Kolkata',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());const get=kind=>parts.find(part=>part.type===kind).value;window.ColorWinWallet.datePicker(page,{value:selectedDate||`${get('year')}-${get('month')}-${get('day')}`,onConfirm:applyDate});};page.querySelector('#tx-date-clear').onclick=()=>applyDate('');more.onclick=()=>void load(true);void load();
+ }
+ window.ColorWinTransactions={view,bind};
+})();

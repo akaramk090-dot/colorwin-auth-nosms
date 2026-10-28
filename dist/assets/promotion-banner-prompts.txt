@@ -1,0 +1,7 @@
+Built-in image_gen was used to create both final assets.
+
+promotion-rewards.png prompt:
+Create a polished wide horizontal website banner, aspect 3:1, for Color Win partner rewards. Glossy luxurious gold trophy with a faceted purple jewel and piles of gold coins on the LEFT half, ring behind trophy. RIGHT half is calm clean dark navy-purple gradient negative space for HTML text overlay. Neon violet magenta edge lighting with warm gold glow, navy #090d2a backdrop. Premium 3D marketing render, full bleed. No letters, no text, no watermark.
+
+promotion-support.png prompt:
+Create a wide horizontal 2.5:1 full bleed website customer-service banner for Color Win. A smiling professional young female support agent in white blouse wearing a headset, centered waist-up, realistic polished commercial photography with gentle 3D decorative speech bubbles floating on either side. Background deep navy #090d2a, neon violet and magenta gradient, soft glowing abstract oval shapes behind woman. Small gold plus signs and subtle circular accents. Friendly premium clean composition, agent face well lit, bottom crop at waist. No text, no brand logos, no watermark.

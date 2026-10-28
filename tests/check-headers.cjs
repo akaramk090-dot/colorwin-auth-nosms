@@ -1,0 +1,3 @@
+const path=require('path');const {chromium}=require(path.join(require('os').homedir(),'.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright'));
+(async()=>{const b=await chromium.launch({channel:'msedge',headless:true});const p=await b.newPage({viewport:{width:390,height:844}});for(const route of ['home','activity']){await p.goto('http://127.0.0.1:5173/preview#/'+route);await p.locator('header').first().waitFor();await p.evaluate(()=>scrollTo(0,500));const top=await p.locator('header').first().evaluate(el=>el.getBoundingClientRect().top);if(top!==0)throw Error(route+' header moved: '+top);console.log('PASS '+route+' header fixed at top after scroll');}await b.close();})().catch(e=>{console.error(e);process.exitCode=1;});
+

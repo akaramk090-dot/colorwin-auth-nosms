@@ -1,0 +1,11 @@
+<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Icons/Search">
+<path id="Vector" d="M10.5439 18C12.3189 17.9996 14.0427 17.4054 15.4409 16.312L19.8369 20.708L21.2509 19.294L16.8549 14.898C17.9489 13.4997 18.5435 11.7754 18.5439 10C18.5439 5.589 14.9549 2 10.5439 2C6.13295 2 2.54395 5.589 2.54395 10C2.54395 14.411 6.13295 18 10.5439 18ZM10.5439 4C13.8529 4 16.5439 6.691 16.5439 10C16.5439 13.309 13.8529 16 10.5439 16C7.23495 16 4.54395 13.309 4.54395 10C4.54395 6.691 7.23495 4 10.5439 4Z" fill="url(#paint0_linear_341_3178)"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_341_3178" x1="11.844" y1="-28.2206" x2="11.8438" y2="51.6482" gradientUnits="userSpaceOnUse">
+<stop offset="0.371997" stop-color="#F5F6FF"/>
+<stop offset="0.892848" stop-color="#F5F6FF" stop-opacity="0"/>
+</linearGradient>
+</defs>
+</svg>

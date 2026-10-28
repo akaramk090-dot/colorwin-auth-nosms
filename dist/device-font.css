@@ -1,0 +1,9 @@
+/* Let the browser resolve the device's native UI font across every route.
+   Family only: existing font sizes, weights and spacing stay intact.
+   Some phone custom fonts are not exposed to websites by the browser. */
+html {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+body, body *, body *::before, body *::after {
+  font-family: inherit !important;
+}

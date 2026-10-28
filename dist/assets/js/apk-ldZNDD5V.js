@@ -1,0 +1,1 @@
+import{c as u,u as t}from"./index-Cw-V9aSo.js";var l=(a=>(a.QuickApk="quick_apk",a.FullApk="full_apk",a))(l||{});const k=u(()=>{const a=t("apk-value-storage","");return{apk:a,setApk:e=>{a.value=e},getApk:()=>a.value,isFullApk:()=>!!a.value&&a.value==="full_apk"}});export{l as ApkType,k as useApkState};

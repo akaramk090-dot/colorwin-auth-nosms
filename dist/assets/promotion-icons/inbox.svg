@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120" fill="none" role="img" aria-labelledby="inbox-title">
+  <title id="inbox-title">Neon inbox</title>
+  <defs>
+    <linearGradient id="inbox-back" x1="22" y1="18" x2="96" y2="86" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6E2BBD"/>
+      <stop offset="1" stop-color="#A630A9"/>
+    </linearGradient>
+    <linearGradient id="inbox-front" x1="17" y1="62" x2="103" y2="107" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#BD38FF"/>
+      <stop offset="0.52" stop-color="#FF32C6"/>
+      <stop offset="1" stop-color="#FFBC46"/>
+    </linearGradient>
+    <linearGradient id="inbox-lines" x1="46" y1="37" x2="74" y2="55" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FF72DD"/>
+      <stop offset="1" stop-color="#FFC674"/>
+    </linearGradient>
+  </defs>
+  <path d="M41 15H79C97 15 106 24 106 42V78H14V42C14 24 23 15 41 15Z" fill="url(#inbox-back)"/>
+  <rect x="49" y="36" width="22" height="6" rx="3" fill="url(#inbox-lines)"/>
+  <rect x="46" y="48" width="28" height="6" rx="3" fill="url(#inbox-lines)"/>
+  <path d="M23 62H37C41 62 43 64 45 67L49 74C50.5 77 52 78 56 78H64C68 78 69.5 77 71 74L75 67C77 64 79 62 83 62H97C103 62 106 65 106 71V81C106 99 98 107 80 107H40C22 107 14 99 14 81V71C14 65 17 62 23 62Z" fill="url(#inbox-front)"/>
+</svg>

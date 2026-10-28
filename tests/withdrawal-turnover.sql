@@ -1,0 +1,30 @@
+begin;
+do $$ declare u uuid:=gen_random_uuid();m uuid;request uuid:=gen_random_uuid();data jsonb;n numeric;
+begin
+ insert into auth.users(id,email,raw_user_meta_data) values(u,u::text||'@invalid.test','{"phone":"99188977665"}');
+ insert into public.cw_payout_methods(user_id,kind,details) values(u,'upi','{"name":"Test Person","account":"test@upi"}') returning id into m;
+ insert into public.account_game_records(user_id,category,game_name,bet,created_at) values(u,'slot','Test',1000,now()-interval '2 days');
+ insert into public.account_wallet_ledger(user_id,amount,source,reference,created_at) values(u,750,'deposit','test:'||u,now()-interval '1 day');
+ perform set_config('request.jwt.claims',jsonb_build_object('sub',u,'role','authenticated')::text,true);
+ execute 'set local role authenticated';
+ data:=public.colorwin_wallet('load','{}');if (data->>'betting_need')::numeric<>750 then raise exception 'Old bets covered future deposit';end if;
+ begin perform public.colorwin_wallet('withdraw',jsonb_build_object('amount',100,'method_id',m,'request_id',request));raise exception 'Withdrawal accepted before wagering';exception when raise_exception then if sqlerrm not like 'Need to bet%' then raise;end if;end;
+ execute 'reset role';
+ insert into public.account_game_records(user_id,category,game_name,bet,created_at) values(u,'slot','Test',300,now()-interval '12 hours');
+ if colorwin_private.withdrawal_need(u)<>450 then raise exception 'Partial wagering incorrect';end if;
+ insert into public.account_game_records(user_id,category,game_name,bet,created_at) values(u,'slot','Test',600,now()-interval '6 hours');
+ execute 'set local role authenticated';
+ foreach n in array array[110,234,874,100.25] loop
+ begin perform public.colorwin_wallet('withdraw',jsonb_build_object('amount',n,'method_id',m,'request_id',gen_random_uuid()));raise exception 'Invalid multiple accepted';exception when raise_exception then if sqlerrm not like '%multiple of 100%' then raise;end if;end;
+ end loop;
+ data:=public.colorwin_wallet('withdraw',jsonb_build_object('amount',100,'method_id',m,'request_id',request));
+ execute 'reset role';
+ insert into public.account_wallet_ledger(user_id,amount,source,reference) values(u,100,'deposit','test-next:'||u),(u,100,'withdrawal_refund','test-refund:'||u);
+ if colorwin_private.withdrawal_need(u)<>100 then raise exception 'New deposit or refund requirement incorrect';end if;
+ execute 'set local role authenticated';
+ perform public.colorwin_wallet('withdraw',jsonb_build_object('amount',100,'method_id',m,'request_id',request));
+ execute 'reset role';
+ if (select count(*) from public.cw_withdraw_requests where user_id=u)<>1 then raise exception 'Retry duplicated request';end if;
+ if (select sum(amount) from public.account_wallet_ledger where user_id=u)<>850 then raise exception 'Balance changed incorrectly';end if;
+end $$;
+rollback;

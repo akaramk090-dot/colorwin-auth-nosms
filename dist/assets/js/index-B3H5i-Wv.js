@@ -1,0 +1,1 @@
+import{_ as e,H as n,I as a}from"./index-Cw-V9aSo.js";const c={};function i(r,s){return n(),a("div")}const o=e(c,[["render",i],["__file","/home/jenkins/agent/workspace/AR102-Pages-india-Colorwin/src/views/main/PointDetail/index.vue"]]);export{o as default};

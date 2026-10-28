@@ -1,0 +1,25 @@
+/* Keep editable fields free of the browser's extra focus/tap rectangle. */
+input, textarea, select, [contenteditable="true"] {
+  -webkit-tap-highlight-color: transparent;
+}
+input:focus, input:focus-visible,
+textarea:focus, textarea:focus-visible,
+select:focus, select:focus-visible,
+[contenteditable="true"]:focus, [contenteditable="true"]:focus-visible {
+  outline: none !important;
+  outline-offset: 0 !important;
+  box-shadow: none !important;
+}
+.input-shell:focus-within {
+  border-color: rgba(86, 96, 169, .68);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.025), 0 8px 25px rgba(0,0,0,.08);
+}
+.deposit-amount-panel .wallet-amount:focus-within {
+  border-color: #8276b82b;
+  box-shadow: inset 0 2px 7px #0002;
+}
+.payout-field input:focus { border-color: transparent; }
+.checkout-upi .checkout-utr-input:focus-within {
+  outline: none !important;
+  box-shadow: 0 0 8px #d73ba870, 0 0 18px #d73ba840;
+}

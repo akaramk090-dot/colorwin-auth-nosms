@@ -1,0 +1,11 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
+process.loadEnvFile(path.join(root,'.env'));
+const {getDatabase,runMigrations,MerchantRepository,ReceivingAccountRepository}=await import('../packages/db/src/index.js');
+const db=getDatabase();const {defaultMerchant}=runMigrations(db);const merchants=new MerchantRepository(db),accounts=new ReceivingAccountRepository(db);
+const account=accounts.findByMerchantId(defaultMerchant.id).find(a=>a.upiId==='akaramk090-1@oksbi');
+if(!account)accounts.create({merchantId:defaultMerchant.id,upiId:'akaramk090-1@oksbi',payeeName:'Color Win',isActive:true});
+merchants.update(defaultMerchant.id,{businessName:'Color Win',webhookUrl:'https://lwzqbhmdfkbycdizieff.supabase.co/functions/v1/youpi-payments',webhookSecret:process.env.COIN_STORE_WEBHOOK_SECRET,branding:{...defaultMerchant.branding,appName:'Color Win',primaryColor:'#9f38c3',logoUrl:'https://9bk0d38n-5173.inc1.devtunnels.ms/assets/web%20images/color-win-logo-supplied.png',envMode:'localhost',allowCod:false,allowCounterPayments:false,enabledPaymentMethods:['UPI'],sellingMode:'ONLINE'}});
+console.log('Color Win merchant and receiving UPI configured. Secrets remain in local .env.');

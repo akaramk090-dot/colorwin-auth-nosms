@@ -1,0 +1,26 @@
+begin;
+do $$ declare u uuid:=gen_random_uuid();t uuid;link text:='https://ffshare.garena.com/?region=IND&action=qrcode_room_invite_link&room_id=123&qr_serect_code=test';data jsonb;
+begin
+ insert into auth.users(id,email,raw_user_meta_data) values(u,u::text||'@invalid.test','{"phone":"99188177665"}');
+ insert into public.cw_tournaments(title,game,mode,status,capacity,starts_at) values('Room link test','ff','Solo','open',48,now()) returning id into t;
+ insert into colorwin_private.tournament_rooms(tournament_id,room_id,password,room_link) values(t,'','',link);
+ perform set_config('request.jwt.claims',jsonb_build_object('sub',u,'role','authenticated')::text,true);
+ execute 'set local role authenticated';
+ begin perform public.colorwin_tournament('room',jsonb_build_object('id',t));raise exception 'Unregistered access accepted';exception when raise_exception then if sqlerrm not like 'Room only available%' then raise;end if;end;
+ execute 'reset role';
+ insert into public.cw_tournament_entries(tournament_id,user_id,player_id,player_name) values(t,u,'1234567','Test');
+ execute 'set local role authenticated';
+ begin perform public.colorwin_tournament('room',jsonb_build_object('id',t));raise exception 'Nonlive access accepted';exception when raise_exception then if sqlerrm not like 'Room only available%' then raise;end if;end;
+ execute 'reset role';
+ update public.cw_tournaments set status='live' where id=t;
+ execute 'set local role authenticated';
+ data:=public.colorwin_tournament('room',jsonb_build_object('id',t));if data->>'room_link'<>link then raise exception 'Link not returned';end if;
+ data:=public.colorwin_tournament('load','{}');if data::text like '%qr_serect_code%' then raise exception 'Private link leaked through public match list';end if;
+ execute 'reset role';
+ update public.cw_tournament_entries set status='cancelled' where tournament_id=t and user_id=u;
+ execute 'set local role authenticated';
+ begin perform public.colorwin_tournament('room',jsonb_build_object('id',t));raise exception 'Cancelled player got room';exception when raise_exception then if sqlerrm not like 'Room only available%' then raise;end if;end;
+ execute 'reset role';
+ begin update colorwin_private.tournament_rooms set room_link='javascript:alert(1)' where tournament_id=t;raise exception 'Invalid scheme accepted';exception when check_violation then null;end;
+end $$;
+rollback;

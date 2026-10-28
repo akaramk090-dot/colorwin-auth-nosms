@@ -1,0 +1,1 @@
+import{p as t,a as s}from"./index-Cw-V9aSo.js";const i=()=>t(s.GetVipUsers),a=e=>t(s.GetPageListVipUserRecord,e),p=e=>t(s.GetListVipLevel,e),n=e=>t(s.GetListVipUserRewards,e),L=()=>t(s.GetVipUserLevelDetail),o=e=>t(s.AddReceiveAward,e),G=()=>t(s.GetAllVipLevelList);export{o as A,G,a,i as b,L as c,p as d,n as e};

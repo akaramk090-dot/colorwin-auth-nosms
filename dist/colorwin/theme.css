@@ -1,0 +1,119 @@
+/* Color Win palette applied to the recovered APK UI. Component geometry stays original. */
+.pc-header,.navbar-fixed,.navbar__content{background:#111633!important}
+.pc-header .btn.login,.pc-header .btn.register{background:linear-gradient(110deg,#ff238f,#a12dff)!important;border-color:#ff2fcf!important;color:#fff!important}
+.pc-header .balance,.pc-header .icon-btn{background:#171d43!important;border-color:#424a83!important}
+.tabbar__bar{background:#111633!important;border:1px solid #424a83;border-radius:.35rem;box-shadow:0 -.1rem .5rem #05071866}
+.tabbar__items-tab.active .tabbar__items-tab__icon{filter:hue-rotate(165deg) saturate(1.2)}
+.tabbar__items-tab.active{color:#ff2fcf!important}
+:root, :root:root {
+  color-scheme: dark;
+  --cw-background: #070a20;
+  --cw-surface: #111633;
+  --cw-surface-raised: #171d43;
+  --cw-pink: #ff2fcf;
+  --cw-purple: #a12dff;
+  --cw-violet: #6538ff;
+  --cw-cyan: #19c4ff;
+  --main-color: #ff2fcf;
+  --main_gradient-color: linear-gradient(110deg, #ff238f 0%, #ff2fcf 34%, #a12dff 70%, #6538ff 100%);
+  --main_gradient-color2: linear-gradient(180deg, #a12dff 0%, #6538ff 100%);
+  --light-main-color: var(--main-color);
+  --light-main_gradient-color: var(--main_gradient-color);
+  --text_white: #ffffff;
+  --light-bg_white: #ffffff;
+  --text_color_L1: #ffffff;
+  --text_color_L2: #a7add8;
+  --text_color_L3: #747cae;
+  --text_color_L4: #070a20;
+  --bg_color_L1: #070a20;
+  --bg_color_L2: #111633;
+  --bg_color_L3: #171d43;
+  --bg_color_L4: #1a2048;
+  --border_color_L2: #424a83;
+  --Dividing-line_color: rgba(151, 160, 235, .24);
+  --Dividing_line_color: var(--Dividing-line_color);
+  --card_bg_color: rgba(161, 45, 255, .12);
+  --card_border_color: #424a83;
+  --sheet_nva_color: #ff2fcf;
+  --sheet_detail_bg_color: #1a2048;
+  --button_dis_color: linear-gradient(90deg, #424a83, #252b50);
+  --pop_bg-color: linear-gradient(180deg, #a12dff 0%, #6538ff 100%);
+  --icon2: rgba(25, 196, 255, .3);
+  --iconSecondary: rgba(161, 45, 255, .3);
+  --tab1: #ff2fcf;
+  --tab2: #6538ff;
+  /* Outcome colors retain their red/green/purple meaning. */
+  --norm_red-color: #ff6f91;
+  --norm_green-color: #35e0a1;
+  --norm_secondary-color: #ff7b3a;
+  --norm_Purple-color: #a12dff;
+  --norm_bule-color: #2d7cff;
+  --Secondary_red_color: #ff6f91;
+  --Secondary_green_color: #35e0a1;
+  --Secondary_Color1: #ffe3ed;
+  --Secondary_Color2: #d9fff0;
+  --Secondary_moto_Color9: #1c805f;
+  --Secondary_moto_Color8: #d9fff0;
+  --swiper-theme-color: #ff2fcf;
+  /* Shared Vant components and dark dialogs. */
+  --van-primary-color: #ff2fcf;
+  --van-success-color: #35e0a1;
+  --van-danger-color: #ff6f91;
+  --van-warning-color: #ff7b3a;
+  --van-background: #070a20;
+  --van-background-2: #111633;
+  --van-background-3: #171d43;
+  --van-text-color: #ffffff;
+  --van-text-color-2: #a7add8;
+  --van-text-color-3: #747cae;
+  --van-border-color: #424a83;
+  --van-active-color: #1a2048;
+  --van-cell-background: #111633;
+  --van-field-input-text-color: #ffffff;
+  --van-field-placeholder-text-color: #747cae;
+  --van-search-content-background: #171d43;
+  --van-dialog-background: #111633;
+  --van-popup-background: #111633;
+  --van-picker-background: #111633;
+  --van-picker-mask-color: linear-gradient(180deg, #111633, rgba(17,22,51,.4)), linear-gradient(0deg, #111633, rgba(17,22,51,.4));
+  --van-nav-bar-background: #070a20;
+  --van-nav-bar-title-text-color: #ffffff;
+  --van-tabbar-background: #111633;
+  --van-tabbar-item-active-background: #111633;
+  --van-tabbar-item-active-color: #ff2fcf;
+  --van-tabs-nav-background: #111633;
+  --van-tabs-bottom-bar-color: #ff2fcf;
+  --van-tab-text-color: #a7add8;
+  --van-tab-active-text-color: #ffffff;
+  --van-toast-background: rgba(5, 7, 24, .94);
+  /* Alternate token spellings present in lazy-loaded APK screens. */
+  --main_gradient_color: var(--main_gradient-color);
+  --main_green-color: var(--norm_green-color);
+  --norm_red_color: var(--norm_red-color);
+  --norm_Orange_color: #ff7b3a;
+  --norm_Orange2_color: #ffd34d;
+  --norm_purple1_color: #a12dff;
+  --text_color_L: #ffffff;
+  --textColor: #ffffff;
+  --textW: #ffffff;
+  --darkTextW: #ffffff;
+  --white: #ffffff;
+  --off-white-texts: #a7add8;
+  --darkBg: #070a20;
+  --drakBg: #070a20;
+  --bgDark: #070a20;
+  --bgDark-2: #111633;
+  --bgDark-3: #171d43;
+  --bgDark-4: #1a2048;
+  --darkLight: #111633;
+  --darkLight2: #171d43;
+  --game_tab_active_bg: var(--main_gradient-color);
+  --homeActiveBgColor: #a12dff;
+  --HomebgLightColor: #171d43;
+  --trend_head_color: #171d43;
+  --secondary: #19c4ff;
+}
+html, body { background-color: #070a20; }
+body { color: #ffffff; }
+/* Preserve the recovered image boxes; fit the supplied wordmark within them. */
+img[data-colorwin-logo] { object-fit: contain; }

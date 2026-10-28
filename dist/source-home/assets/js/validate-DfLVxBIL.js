@@ -1,0 +1,1 @@
+const a={passReg3:/^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,30}$/,email1:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,inputrule:/^[0-9,|]+$/},e={passReg2:"pswRequirements",email:"validateDesc14",inputtip:"validateDesc22"};export{e as a,a as v};

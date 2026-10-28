@@ -1,0 +1,5 @@
+.source-frame-page{width:min(100%,var(--page-w));height:100dvh;overflow:hidden;background:#070a20}.source-frame-page iframe{display:block;width:100%;height:100%;border:0}body:has(.source-frame-page:not([hidden])){height:100dvh;overflow:hidden!important}body:has(.source-frame-page:not([hidden])) #app{height:100dvh;min-height:0!important;overflow:hidden}
+
+.source-frame-page.source-internal-page>.account-tabbar{display:none!important}
+
+.source-frame-page[hidden]{display:none!important}

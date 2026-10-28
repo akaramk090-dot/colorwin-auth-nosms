@@ -1,0 +1,22 @@
+begin;do $$ declare u uuid:=gen_random_uuid();v uuid:=gen_random_uuid();req uuid:=gen_random_uuid();d jsonb;flight uuid;bet_id uuid;before_balance numeric;begin
+insert into auth.users(id,email,raw_user_meta_data) values(u,u||'@invalid.test','{"phone":"99187774401"}'),(v,v||'@invalid.test','{"phone":"99187774402"}');
+perform set_config('request.jwt.claims',jsonb_build_object('sub',u,'role','authenticated')::text,true);
+begin perform public.colorwin_arcade('limbo','bet',jsonb_build_object('amount',10,'target',2,'request_id',req));raise exception 'Empty wallet allowed';exception when raise_exception then if sqlerrm<>'Insufficient wallet balance' then raise;end if;end;
+insert into public.account_wallet_ledger(user_id,amount,source,reference) values(u,1000,'test','arcade-test:'||u);
+execute 'set local role authenticated';
+d:=public.colorwin_arcade('limbo','bet',jsonb_build_object('amount',10,'target',2,'request_id',req));before_balance:=(d->>'balance')::numeric;
+d:=public.colorwin_arcade('limbo','bet',jsonb_build_object('amount',10,'target',2,'request_id',req));if (d->>'balance')::numeric<>before_balance then raise exception 'Duplicate Limbo credit/debit';end if;
+d:=public.colorwin_arcade('aviator','load');flight:=(d->'round'->>'id')::uuid;if d::text like '%crash_multiplier%' or d::text like '%crash_at%' then raise exception 'Secret exposed';end if;
+d:=public.colorwin_arcade('aviator','bet',jsonb_build_object('flight_id',flight,'slot',0,'amount',50,'request_id',gen_random_uuid()));bet_id:=(d->'round'->'bets'->0->>'id')::uuid;
+d:=public.colorwin_arcade('aviator','cancel',jsonb_build_object('id',bet_id));if (d->>'balance')::numeric<>before_balance then raise exception 'Cancel refund wrong';end if;
+d:=public.colorwin_arcade('aviator','cancel',jsonb_build_object('id',bet_id));if (d->>'balance')::numeric<>before_balance then raise exception 'Duplicate refund';end if;
+d:=public.colorwin_arcade('aviator','bet',jsonb_build_object('flight_id',flight,'slot',1,'amount',20,'request_id',gen_random_uuid()));
+execute 'reset role';select id into bet_id from colorwin_private.arcade_bets where flight_id=flight and status='active';
+update colorwin_private.arcade_flights set starts_at=clock_timestamp()-interval '1 second',crash_at=clock_timestamp()+interval '20 seconds',crash_multiplier=50 where id=flight;
+execute 'set local role authenticated';
+d:=public.colorwin_arcade('aviator','cash',jsonb_build_object('id',bet_id));before_balance:=(d->>'balance')::numeric;
+d:=public.colorwin_arcade('aviator','cash',jsonb_build_object('id',bet_id));if (d->>'balance')::numeric<>before_balance then raise exception 'Duplicate cash out';end if;
+begin perform * from colorwin_private.arcade_flights;raise exception 'Private data exposed';exception when insufficient_privilege then null;end;
+execute 'reset role';perform set_config('request.jwt.claims',jsonb_build_object('sub',v,'role','authenticated')::text,true);perform public.colorwin_arcade('aviator','load');
+begin perform public.colorwin_arcade('aviator','cash',jsonb_build_object('id',bet_id));raise exception 'Other user cash';exception when raise_exception then if sqlerrm<>'Bet not found' then raise;end if;end;
+end $$;rollback;

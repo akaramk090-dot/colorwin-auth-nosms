@@ -1,0 +1,1 @@
+import{p as t,a as e}from"./index-Cw-V9aSo.js";const p=async()=>t(e.GetDateTimeScopeTypes).then(a=>a.data),s=async a=>t(e.UploadImage,a,{},{"Content-Type":"multipart/form-data"}),n=async a=>t(e.UploadVideo,a,{},{"Content-Type":"multipart/form-data"});export{s as U,n as a,p as g};

@@ -1,0 +1,11 @@
+(() => {
+ const auth=()=>window.ColorWinAuth,owner=()=>auth().session?.user?.id||'',preview=()=>owner()==='preview';
+ let configOwner='',configPending=null,config=null;
+ const rpc=async(name,args)=>{const u=owner();if(!u||preview())throw Error('Sign in with a real account to submit this request.');const result=await auth().accountRpc(name,args);if(owner()!==u)throw Error('Account changed. Reload this page.');return result;};
+ const order=r=>({id:r.id,number:r.number,amount:Number(r.amount),method:r.method,gatewayProvider:r.gateway_provider,recipientUpi:r.recipient_upi,recipientName:r.recipient_name,utr:r.utr,status:r.status,reviewNote:r.review_note,createdAt:new Date(r.created_at).getTime(),expiresAt:new Date(r.expires_at).getTime()});
+ function saveWallet(data){const key='cw_wallet_demo_'+owner(),methods=(data.methods||[]).map(r=>({...r.details,id:r.id,kind:r.kind}));sessionStorage.setItem(key,JSON.stringify({orders:(data.deposits||[]).map(order),withdrawals:data.withdrawals||[],methods,name:methods.find(m=>m.name)?.name||'',balance:Number(data.balance),bettingNeed:data.betting_need==null?null:Number(data.betting_need)}));localStorage.setItem('cw_payout_methods_'+owner(),JSON.stringify({methods,name:methods.find(m=>m.name)?.name||''}));return data;}
+ async function loadWallet(){if(preview())return null;return saveWallet(await rpc('colorwin_wallet',{p_action:'load'}));}
+ async function wallet(action,data={}){const result=await rpc('colorwin_wallet',{p_action:action,p_data:data});return action==='create_deposit'?order(result):result;}
+ async function loadConfig(){if(preview()||!owner())return null;if(configOwner!==owner()){configOwner=owner();configPending=null;config=null;}if(config)return config;if(!configPending){const u=owner();configPending=rpc('colorwin_site_config',{}).then(d=>{if(owner()!==u)return null;config=d;const p=d.settings.payments;window.ColorWinPaymentConfig=Object.freeze({...window.ColorWinPaymentConfig,...p});const telegram=d.settings.promotion?.telegram;if(telegram&&/^https:\/\/t\.me\//.test(telegram))window.ColorWinSocialLinks=Object.freeze({...window.ColorWinSocialLinks,telegram});return d;}).finally(()=>{if(owner()===u)configPending=null;});}return configPending;}
+ window.ColorWinOperations={preview,loadWallet,wallet,loadConfig,rpc,get config(){return configOwner===owner()?config:null;}};
+})();

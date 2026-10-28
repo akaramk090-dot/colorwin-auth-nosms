@@ -1,0 +1,44 @@
+# Exact ZIP home and game UI — corrected implementation
+
+Supersedes the previous custom home/lottery reconstruction.
+
+The supplied Colorwin-Home-Source.zip's compiled home, category pages, View All provider pages and K3/5D/TRX screens now run directly. The supplied JavaScript/CSS UI assets are retained; the home mount now passes the existing silent flag when loading the balance, fixing its unsolicited success toast. The ZIP's theme, imagery, layout, dialogs and game components are retained; no replacement game UI is loaded. The previous custom home-layout.js, home-source-data.js, lottery.js and lottery.css were removed from dist and archived under reference-home/superseded-custom/.
+
+The original source uses absolute asset paths. Those assets are served unchanged under dist/assets and dist/colorwin. No conflicting existing Color Win asset was overwritten. The complete extracted frontend is also retained under dist/source-home. Its entry page adds a separate bridge and an asynchronous XHR adapter. Runtime UI components are not modified.
+
+The source runs inside a full-height isolated document so its CSS/router do not change the rest of Color Win. The parent keeps the original auth, wallet, deposit, withdrawal, account, activity and support pages. View All and provider pages stay inside the supplied router (Slots -> AllGames?type=slot -> original AllOnlineGames). Navigation to other account functions returns to the existing app. WinGo navigation is intercepted before its source route loads; the existing games/wingo.html remains the active WinGo implementation.
+
+The source's fake balance and game API responses are replaced by authenticated parent requests. No actual access token is passed to the embedded UI. A UI navigation marker is not accepted as a backend credential. Parent requests are restricted to the active frame, origin, owner and supported games. Real winning-feed data replaces sample home winning entries; sample daily-profit rankings are not presented as real account activity.
+
+The API adapter translates the source's existing typeId/gameType/selectType payloads and response shapes. Original multi-selection K3/5D bets use one atomic database batch. All selections are validated, insufficient funds rolls back the whole batch, replay IDs prevent duplicate charges, and private request rows cannot be read by players. TRX fetches/records actual confirmed block timestamps for the original block-history display. Existing settlement and wallet ledger behavior is retained.
+
+Verification:
+- The original import initially verified all 595 JS/CSS files byte-for-byte. The later home stability fix changes only the home balance-load silent flag in that component; game components remain unchanged.
+- Home at 360/390/430 px: no horizontal overflow or new browser exceptions; eight original View All controls.
+- Original Slots View All and provider pages verified (10 provider covers; JILI library with 43 game covers).
+- Original K3, 5D and TRX bet popups exercised in isolated browser fixtures: expected selections/amounts reached the wallet adapter. No game-screen exceptions after response-shape fixes.
+- WinGo navigation verified to load existing games/wingo.html; its code was not changed. The existing sandboxed WinGo emits a sessionStorage warning, outside this change.
+- tests/lottery-source-batch.sql passed in a rolled-back database transaction: debit once, replay, mismatched replay, invalid selection rollback, insufficient-balance rollback and player privacy.
+- Existing npm test: 97 passed. Deno Edge type check passed. New private tables are protected by RLS/revoked table privileges; existing security warning classes are unchanged.
+
+No real user bet was placed during verification. Browser fixtures are test-only and are not part of the runtime app.
+
+## Requested home branding
+
+The home header download button is hidden and its deposit plus uses the original green SVG from assets/web images. The carousel uses existing Color Win campaign banners and routes those clicks back to the original Color Win activity screens. Lottery artwork for WinGo, K3, 5D, TRX and Moto Racing is copied unchanged from the user-provided images_2026-09-27 folder. The Jackpot banner is recomposed with the existing Color Win purple/gold gift artwork and readable HTML text/CTA. These changes are applied through the adapter and scoped home CSS; game runtime bundles remain untouched. Home checks passed at 360/390/430 px, including banner navigation.
+
+## Home refresh stability fix
+
+Background balance loads no longer show the supplied runtime refresh-success toast. The initial home mount uses the existing silent flag; subsequent home wallet actions are quiet through the adapter without suppressing errors. The redundant embedded start-page splash is hidden before its first paint. Same-owner synthetic config refreshes preserve the mounted home document and its scroll position, while real navigation/logout still releases its message listener. Branding observers batch DOM changes per frame instead of watching every descendant class animation. Local development responses use no-store to avoid stale fixes.
+
+Verified: zero success notices across initial mount and three balance refreshes; wallet balance still updates; five synthetic hashchange events retain the same document and 700px scroll position; bridge requests still succeed afterward. Native tabbar navigation and all 97 existing tests pass.
+
+Home winning feed and loader: GetDailyProfitRank now maps authenticated winning-feed rows into the source Winners DTO. Empty/error states keep the original section visible without sample winnings. Home loader displays the supplied ColorWin reference unchanged with a CSS RGB orbit, waits for the hero and catalog, and provides retry after a load timeout. Validated empty and populated UI fixtures, stationary logo/spinning ring, and existing refresh/scroll stability checks.
+
+TRX clock correction (2026-10-25): deployed trx-clock-rounds.sql and Edge trx-lottery v7. Fixed server-clock intervals, final six-second server bet lock, first solidified block at/after round boundary verified with adjacent prior timestamp. Old block-index result rows retained, new history uses clock round IDs. TRON read-only endpoints support retries/fallback. Rollback SQL test verifies all intervals and stale-round rejection without user wallet changes; live worker verified confirmed records. Frontend daily period labels now use server epoch rounds.
+
+TRX server-random mode (2026-10-25): supersedes the earlier chain integration. Applied trx-server-random.sql; results use server-side rejection-sampled random digits after round close, saved under per-round lock. All lottery actions use authenticated RPC, no frontend TRON calls. Chain cron removed and retired Edge endpoint returns 410 without network calls. Period and countdown remain fixed server-clock intervals; chain query/metadata columns removed from display and random-source note added. SQL rollback test passed all lanes, immutable results, future-round guard, wallet debit/payout exactly once. Browser fixture passed direct RPC and no chain controls. Existing confirmed history retained.
+
+Home tab performance fix (2026-10-26): keep the same connected Home iframe in #app, hide it during Account/Activity/Tournaments navigation, restore without reloading or re-binding the bridge. Only cache the Home route, clear owner-mismatched cache, and refresh wallet silently on resume. Active-frame selectors and body scroll rules exclude hidden cached Home. Loader skips already-ready frames. Tab bindings are idempotent. Local preview server now supports ETag/304 and gzip for text assets; measured main source module 1,234,351 -> 420,752 bytes (66% lower transfer). Browser test: zero repeat Home document requests across four tab returns, scroll preserved, no loader, 150–770 ms observed return. Existing loader and home stability regressions pass.
+
+Deposit-not-received support (2026-10-26): support data now reads owned cw_deposit_requests in pending/to be paid/cancelled only; completed orders excluded and rejected on submit. Order selection deep links populate readonly canonical order number/amount; server re-reads the owned order under row lock and overwrites submitted canonical fields. Private receipt uploads allow JPG/PNG/WEBP <=10MB; after 24h, statement video and PDF required, each <=50MB. MIME/extension/size validation on client and uploaded storage metadata checked on server. Private bucket PDF allowlist enabled. Submission cleanup retained. Browser fixtures cover eligible filtering, autofill, old-order proof fields, invalid type/oversize and three-proof submit; rollback SQL tests verify ownership, completed rejection, receipt requirement and private bucket/anonymous privilege guard. Existing security-advisor counts unchanged.

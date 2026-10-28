@@ -1,0 +1,23 @@
+begin;
+do $$ declare u uuid:=gen_random_uuid();v uuid:=gen_random_uuid();r jsonb;rid uuid;req uuid:=gen_random_uuid();safe integer;bomb integer;begin
+insert into auth.users(id,email,raw_user_meta_data) values(u,u||'@invalid.test','{"phone":"99171112233"}'),(v,v||'@invalid.test','{"phone":"99171112234"}');
+perform set_config('request.jwt.claims',jsonb_build_object('sub',u,'role','authenticated')::text,true);
+begin perform public.colorwin_mines('start',jsonb_build_object('amount',50,'mines',3,'request_id',req));raise exception 'Insufficient balance accepted';exception when raise_exception then if sqlerrm<>'Insufficient wallet balance' then raise;end if;end;
+insert into public.account_wallet_ledger(user_id,amount,source,reference) values(u,100,'test','mines-test:'||u);
+execute 'set local role authenticated';
+r:=public.colorwin_mines('start',jsonb_build_object('amount',50,'mines',3,'request_id',req));rid:=(r->'round'->>'id')::uuid;
+if r->>'balance'<>'50' and (r->>'balance')::numeric<>50 then raise exception 'Debit incorrect';end if;
+if r->'round'->'mines'<>'[]'::jsonb then raise exception 'Active mines exposed';end if;
+r:=public.colorwin_mines('start',jsonb_build_object('amount',50,'mines',3,'request_id',req));if (r->>'balance')::numeric<>50 then raise exception 'Duplicate debit';end if;
+begin perform * from colorwin_private.mines_rounds;raise exception 'Private table readable';exception when insufficient_privilege then null;end;
+execute 'reset role';
+select n into safe from generate_series(0,24)n cross join colorwin_private.mines_rounds m where m.id=rid and not n=any(m.mines) limit 1;
+execute 'set local role authenticated';
+r:=public.colorwin_mines('pick',jsonb_build_object('id',rid,'tile',safe));
+r:=public.colorwin_mines('cash',jsonb_build_object('id',rid));if (r->>'balance')::numeric<>106.50 then raise exception 'Cashout incorrect';end if;
+r:=public.colorwin_mines('cash',jsonb_build_object('id',rid));if (r->>'balance')::numeric<>106.50 then raise exception 'Double cashout';end if;
+execute 'reset role';
+if (select bet from public.account_game_records where account_game_records.id=rid)<>50 then raise exception 'Bet not recorded';end if;
+perform set_config('request.jwt.claims',jsonb_build_object('sub',v,'role','authenticated')::text,true);
+begin perform public.colorwin_mines('cash',jsonb_build_object('id',rid));raise exception 'Other user access';exception when raise_exception then if sqlerrm<>'Round not found' then raise;end if;end;
+end $$;rollback;

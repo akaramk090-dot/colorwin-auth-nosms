@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120" fill="none" role="img" aria-labelledby="filter-title">
+  <title id="filter-title">Neon filter document</title>
+  <defs>
+    <linearGradient id="filter-card" x1="24" y1="25" x2="100" y2="105" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6829BC"/>
+      <stop offset="1" stop-color="#B531BB"/>
+    </linearGradient>
+    <linearGradient id="filter-accent" x1="18" y1="18" x2="90" y2="98" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#BD38FF"/>
+      <stop offset="0.55" stop-color="#FF32C6"/>
+      <stop offset="1" stop-color="#FFBC46"/>
+    </linearGradient>
+  </defs>
+  <path d="M49 23H77C95 23 104 32 104 50V79C104 97 95 106 77 106H47C29 106 20 97 20 79V51C20 32 30 23 49 23Z" fill="url(#filter-card)"/>
+  <path d="M22 18H60C64 18 66 20 66 24V31C66 35 65 37 62 40L49 51V68C49 72 47 74 43 74H37C33 74 31 72 31 68V51L20 40C17 37 16 35 16 31V24C16 20 18 18 22 18Z" fill="url(#filter-accent)"/>
+  <rect x="64" y="71" width="24" height="7" rx="3.5" fill="url(#filter-accent)"/>
+  <rect x="55" y="86" width="34" height="7" rx="3.5" fill="url(#filter-accent)"/>
+</svg>

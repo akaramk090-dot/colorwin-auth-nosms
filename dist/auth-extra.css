@@ -1,0 +1,280 @@
+/* Auth extras: screenshot-style jigsaw slider captcha + auth helpers. */
+
+/* ---------------------------------------------------------
+   PUZZLE CAPTCHA — intentionally clean/light like reference
+--------------------------------------------------------- */
+.captcha {
+  width: min(440px, calc(100vw - 18px));
+  max-width: 440px;
+  padding: 0;
+  border: 1px solid #d8d8d8;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #fff;
+  color: #202020;
+  box-shadow: 0 18px 52px rgba(0,0,0,.38);
+}
+.captcha::backdrop {
+  background: rgba(0,0,0,.58);
+  backdrop-filter: blur(2px);
+}
+
+.puzzle-captcha__image {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1.54 / 1;
+  overflow: hidden;
+  background: #d9e2ea;
+  user-select: none;
+}
+.puzzle-captcha__background {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.puzzle-captcha__piece {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 4;
+  display: block;
+  pointer-events: none;
+  will-change: transform;
+  filter: drop-shadow(0 2px 3px rgba(0,0,0,.55));
+}
+
+.puzzle-captcha__loading {
+  position: absolute;
+  inset: 0;
+  z-index: 8;
+  display: grid;
+  place-items: center;
+  background: rgba(245,247,249,.88);
+  color: #555;
+  font-size: 13px;
+}
+.puzzle-captcha__loading[hidden] { display: none; }
+
+.captcha-close,
+.puzzle-captcha__refresh {
+  position: absolute;
+  z-index: 10;
+  top: 9px;
+  width: 31px;
+  height: 31px;
+  border: 1px solid rgba(255,255,255,.68);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  color: #fff;
+  background: rgba(20,25,35,.55);
+  box-shadow: 0 2px 8px rgba(0,0,0,.20);
+  backdrop-filter: blur(3px);
+  cursor: pointer;
+  line-height: 1;
+}
+.captcha-close { left: 9px; font-size: 20px; }
+.puzzle-captcha__refresh { right: 9px; font-size: 19px; }
+
+.puzzle-captcha__feedback {
+  position: absolute;
+  z-index: 9;
+  left: 50%;
+  bottom: 10px;
+  transform: translateX(-50%);
+  min-height: 24px;
+  padding: 4px 11px;
+  border-radius: 999px;
+  color: #fff;
+  background: transparent;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.puzzle-captcha.is-success .puzzle-captcha__feedback {
+  background: rgba(19,143,77,.88);
+}
+.puzzle-captcha.is-error .puzzle-captcha__feedback {
+  background: rgba(189,48,55,.88);
+}
+
+/* Reference-style light slider area */
+.captcha__bar {
+  position: relative;
+  height: 64px;
+  overflow: hidden;
+  border-top: 1px solid #d7d7d7;
+  background: #efefef;
+  user-select: none;
+  touch-action: pan-y;
+}
+.captcha_progress_bar {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0;
+  background: rgba(215,231,241,.62);
+  pointer-events: none;
+  will-change: width;
+}
+.captcha-status {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding-left: 58px;
+  color: #333;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: .1px;
+  pointer-events: none;
+  transition: opacity .12s ease;
+}
+.captcha_handler {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 5;
+  width: 64px;
+  height: 64px;
+  border: 0;
+  border-right: 1px solid #dedede;
+  border-radius: 0;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  color: #050505;
+  background: #fff;
+  box-shadow: 2px 0 7px rgba(0,0,0,.05);
+  cursor: grab;
+  touch-action: none;
+  will-change: transform;
+}
+.captcha_handler span {
+  display: block;
+  transform: translateY(-1px) scaleX(1.15);
+  font-family: Arial, sans-serif;
+  font-size: 36px;
+  font-weight: 400;
+  line-height: 1;
+}
+.captcha_handler:active { cursor: grabbing; }
+.captcha_handler:disabled { cursor: default; }
+
+.captcha-return {
+  transition: transform .34s ease, width .34s ease;
+}
+.captcha_progress_bar.captcha-return { transition-property: width; }
+
+.puzzle-captcha.is-success .captcha__bar {
+  background: #edf9f2;
+}
+.puzzle-captcha.is-success .captcha_progress_bar {
+  background: rgba(66,190,116,.20);
+}
+.puzzle-captcha.is-success .captcha_handler {
+  color: #16894e;
+  background: #f5fff9;
+}
+.puzzle-captcha.is-error .captcha__bar {
+  animation: cwCaptchaShake .30s ease;
+}
+.puzzle-captcha.is-error .captcha_progress_bar {
+  background: rgba(228,70,75,.12);
+}
+
+@keyframes cwCaptchaShake {
+  0%,100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  50% { transform: translateX(4px); }
+  75% { transform: translateX(-2px); }
+}
+
+@media (max-width: 430px) {
+  .captcha {
+    width: calc(100vw - 12px);
+    max-width: none;
+  }
+  .captcha__bar,
+  .captcha_handler { height: 60px; }
+  .captcha_handler { width: 60px; }
+  .captcha-status { padding-left: 54px; font-size: 13px; }
+  .captcha_handler span { font-size: 33px; }
+}
+
+/* ---------------------------------------------------------
+   EXISTING AUTH HELPERS
+--------------------------------------------------------- */
+.auth-page .auth-tabs.phone-only { grid-template-columns: 1fr; }
+.primary-btn:disabled { opacity: .65; cursor: wait; }
+.auth-otp {
+  width: 100%;
+  background: var(--surface);
+  color: white;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+  margin-top: 15px;
+}
+
+/* ---------------------------------------------------------
+   AUTH LANGUAGE BOTTOM SHEET
+--------------------------------------------------------- */
+.auth-language-sheet[hidden]{display:none!important}
+.auth-language-sheet{position:fixed;inset:0;z-index:1000000;display:flex;align-items:flex-end;justify-content:center;font-family:"Bahnschrift","Segoe UI",Arial,sans-serif}
+.auth-language-backdrop{position:absolute;inset:0;border:0;padding:0;background:rgba(0,0,0,.62);opacity:0;transition:opacity .22s ease;cursor:default}
+.auth-language-panel{position:relative;z-index:1;width:min(480px,100%);padding:8px 16px 0;background:#202126;border:1px solid #383940;border-bottom:0;border-radius:20px 20px 0 0;box-shadow:0 -16px 48px rgba(0,0,0,.42);transform:translateY(105%);transition:transform .24s cubic-bezier(.22,.8,.26,1)}
+.auth-language-sheet.open .auth-language-backdrop{opacity:1}
+.auth-language-sheet.open .auth-language-panel{transform:translateY(0)}
+.auth-language-handle{width:42px;height:4px;margin:2px auto 11px;border-radius:999px;background:#606168}
+.auth-language-heading{display:flex;align-items:center;justify-content:space-between;padding:2px 2px 10px}
+.auth-language-heading h2{margin:0;color:#f7f5fb;font-size:18px;font-weight:650}
+.auth-language-close{width:34px;height:34px;display:grid;place-items:center;border:0;border-radius:50%;background:#2c2d32;color:#bfc0c7;font-size:23px;line-height:1;cursor:pointer}
+.auth-language-option{width:100%;min-height:66px;display:grid;grid-template-columns:44px 1fr 28px;align-items:center;gap:12px;margin:7px 0;padding:8px 12px;border:1px solid #383940;border-radius:14px;background:#28292e;color:#fff;text-align:left;cursor:pointer}
+.auth-language-option.selected{border-color:#c73ee8;background:linear-gradient(105deg,rgba(163,48,239,.18),rgba(255,54,190,.10)),#28292e;box-shadow:inset 0 0 0 1px rgba(255,74,209,.08)}
+.auth-language-flag{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:#17181c;font-size:24px;overflow:hidden}
+.auth-language-option>span:nth-child(2){display:flex;flex-direction:column;gap:2px}
+.auth-language-option strong{font-size:15px;font-weight:650;color:#fff}
+.auth-language-option small{font-size:11px;color:#9798a1}
+.auth-language-check{display:grid;place-items:center;width:23px;height:23px;border-radius:50%;background:#b83de4;color:#fff;font-size:14px;opacity:0;transform:scale(.85);transition:.15s ease}
+.auth-language-option.selected .auth-language-check{opacity:1;transform:scale(1)}
+.auth-language-safe{height:max(14px,env(safe-area-inset-bottom))}
+@media(max-width:480px){.auth-language-panel{width:100%;padding-left:14px;padding-right:14px}.auth-language-heading h2{font-size:17px}}
+
+/* Puzzle captcha + language sheet phone fit */
+@media (max-width: 480px) {
+  .captcha { width: calc(100vw - 16px); max-width: 430px; max-height: calc(100svh - 20px); margin: auto; }
+  .puzzle-captcha__image { max-height: 58svh; }
+  .auth-language-panel { max-height: min(72svh, 520px); overflow-y: auto; overscroll-behavior: contain; padding-bottom: env(safe-area-inset-bottom); }
+  .auth-language-option { min-height: 58px; }
+}
+@media (max-width: 350px) {
+  .captcha { width: calc(100vw - 10px); }
+  .captcha__bar, .captcha_handler { height: 56px; }
+  .captcha_handler { width: 56px; }
+  .captcha-status { padding-left: 50px; font-size: 12px; }
+}
+
+/* Phone country-code chevron fix: keep the dropdown arrow compact on mobile WebViews. */
+@media (max-width: 480px) {
+  #app .phone-row .country .country-toggle .country-arrow {
+    position: static !important;
+    right: auto !important;
+    width: 16px !important;
+    height: 11px !important;
+    min-width: 16px !important;
+    max-width: 16px !important;
+    flex: 0 0 16px !important;
+    margin-left: auto !important;
+    overflow: visible !important;
+    transform-origin: 50% 50% !important;
+  }
+
+  #app .phone-row .country .country-toggle {
+    gap: 8px;
+    overflow: hidden;
+  }
+}

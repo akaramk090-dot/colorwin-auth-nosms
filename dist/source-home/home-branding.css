@@ -1,0 +1,76 @@
+/* Requested Color Win home branding; game components retain their own styles. */
+html.cw-native-home .pc-header>.icon-btn:nth-of-type(3){display:none!important}
+html.cw-native-home .pc-header .balance img.add{filter:none!important}
+html.cw-native-home .jackpot-banner{position:relative;min-height:148px!important;height:auto!important;box-sizing:border-box!important;padding:15px 16px!important;border-radius:14px!important;border:1px solid #bc5ae7!important;background:linear-gradient(90deg,rgba(15,5,47,.25),rgba(15,5,47,0) 63%),url('/assets/web%20images/colorwin-super-jackpot.png') center/cover no-repeat!important;box-shadow:inset 0 1px 0 #f5b9ff40,0 5px 22px #8c24e526!important;overflow:hidden}
+html.cw-native-home .jackpot-banner .jackpot-content{position:relative!important;z-index:1;width:55%!important;max-width:none!important;margin:0!important;padding:0!important;left:auto!important;right:auto!important;transform:none!important}
+html.cw-native-home .jackpot-banner .jackpot-content:before{content:'COLOR WIN';display:block;color:#f7d07c;font-size:8px;letter-spacing:1.6px;font-weight:800;margin-bottom:4px}
+html.cw-native-home .jackpot-banner .title{font-size:19px!important;line-height:1.12!important;font-weight:800!important;color:#fff!important;margin:0 0 7px!important;text-shadow:0 1px 5px #270337}
+html.cw-native-home .jackpot-banner .desc{font-size:10px!important;line-height:1.35!important;color:#e6d8ff!important;margin:0 0 10px!important;max-width:145px}
+html.cw-native-home .jackpot-banner .link{display:inline-flex!important;align-items:center;justify-content:center;min-height:27px!important;height:auto!important;width:auto!important;min-width:84px;padding:5px 13px!important;border:1px solid #ffda8f!important;border-radius:16px!important;background:linear-gradient(110deg,#df35c1,#8c35e5)!important;color:#fff!important;font-size:11px!important;font-weight:700!important;line-height:1.1!important;box-shadow:0 2px 10px #08011d50}
+html.cw-native-home .b-item img[src*="/assets/colorwin-home/"]{object-fit:contain!important;background:#120c29}
+
+/* Keep only the existing customer-service shortcut on the home page. */
+html.cw-native-home .float,html.cw-native-home .pwa-btn,html.cw-native-home .pwa-btn__close{display:none!important}
+html.cw-native-home .partner-logos__grid-item{height:auto!important;min-height:0!important;aspect-ratio:2053/766;background:transparent!important;border:0!important;padding:0!important;overflow:visible!important;box-shadow:none!important}
+html.cw-native-home .partner-logos__grid-item img{display:block;width:100%!important;max-width:100%!important;height:auto!important;max-height:none!important;object-fit:contain!important;padding:0!important}
+html.cw-native-home .cw-winning-empty{margin:0;padding:15px 10px;border:1px solid #714c9c55;border-radius:9px;background:#15102c;color:#bcaed6;font-size:11px;line-height:1.5}
+
+/* Preserve the source card dimensions and keep the ColorWin palette. */
+html.cw-native-home .winners__item{background:linear-gradient(135deg,#24163e,#11152e)!important;border-color:#7850a666!important}
+html.cw-native-home .winners__item .amount{color:#4fe0ab!important}
+
+html.cw-native-home .winners__item .user{display:flex!important}
+html.cw-native-home .winners__item .avatar{display:none!important}
+
+/* TRX cards use the existing ColorWin WinGo wallet palette. */
+#app .WinTrx__C .Wallet__C:before{background:transparent!important}
+#app .WinTrx__C .Wallet__C-balance{background:radial-gradient(circle at 0 100%,#bc48cc22 0 30%,transparent 30%),linear-gradient(120deg,#391344,#1c102e 65%,#371a43)!important;border:1px solid #8746a1!important;border-radius:19px!important;box-shadow:inset 0 1px #e4a8ff22!important}
+#app .WinTrx__C .Wallet__C-balance-l1{color:#fff!important}
+#app .WinTrx__C .Wallet__C-balance-l2{color:#d2b7df!important}
+#app .WinTrx__C .Wallet__C-balance-l2 svg{color:#b66bea!important}
+#app .WinTrx__C .Wallet__C-balance-l3>div{background:linear-gradient(120deg,#eb4f78,#bc337c)!important;color:#fff!important}
+#app .WinTrx__C .Wallet__C-balance-l3>div+div{background:linear-gradient(120deg,#20bd81,#0a8d64)!important}
+#app .WinTrx__C .TimeLeft__C{background:linear-gradient(120deg,#49325e,#35234f)!important;border:0!important;border-radius:0!important;color:#fff!important;box-shadow:none!important;-webkit-mask:url('/assets/png/trxbg-BHsdLL4Q.png') 0 0/100% 100% no-repeat!important;mask:url('/assets/png/trxbg-BHsdLL4Q.png') 0 0/100% 100% no-repeat!important}
+#app .WinTrx__C .TimeLeft__C-l1-no{border-color:#bca5d4!important;color:#fff!important}
+#app .WinTrx__C .TimeLeft__C-l1-tip,#app .WinTrx__C .TimeLeft__C-l1-r{background:#221531!important;color:#f4eaff!important;border:1px solid #8d6aa2!important}
+#app .WinTrx__C .TimeLeft__C-l1 svg{color:#e0c6f1!important}
+#app .WinTrx__C .TimeLeft__C-l2{color:#fff!important}
+#app .WinTrx__C .TimeLeft__C .TimeLeft__C-time>div{background:#171023!important;color:#fff!important;border:0!important}
+
+/* Share WinGo's supplied watch PNGs and final wallet card across lottery games. */
+html.cw-source-lottery #app .GameList__C-item>div{position:relative;background-image:none!important}
+html.cw-source-lottery #app .GameList__C-item>div:before{content:'';position:absolute;top:.18667rem;left:50%;transform:translateX(-50%);width:1.17333rem;height:1.17333rem;background:url('/games/wingo-assets/watch-inactive-grey.png') center/contain no-repeat;pointer-events:none}
+html.cw-source-lottery #app .GameList__C-item.active>div:before{background-image:url('/games/wingo-assets/watch-active-blue.png');filter:hue-rotate(65deg)}
+html.cw-source-lottery #app .Wallet__C:before{background:transparent!important}
+html.cw-source-lottery #app .Wallet__C-balance{border:0!important;border-radius:20px!important;background:linear-gradient(115deg,#35203f,#21182d)!important;position:relative;overflow:hidden;padding:17px 18px 14px!important;box-shadow:none!important}
+html.cw-source-lottery #app .Wallet__C-balance:before{content:'';position:absolute;inset:0;background:url('/games/wingo-assets/walletbg-B_xq3Fxh.png') left center/cover no-repeat;opacity:.07;pointer-events:none}
+html.cw-source-lottery #app .Wallet__C-balance-l1{font-size:23px!important;color:#fff!important}
+html.cw-source-lottery #app .Wallet__C-balance-l2{color:#d2b7df!important;font-size:11px!important}
+html.cw-source-lottery #app .Wallet__C-balance-l2 svg{color:#b66bea!important}
+html.cw-source-lottery #app .Wallet__C-balance-l3{gap:20px!important}
+html.cw-source-lottery #app .Wallet__C-balance-l3>div{flex:1;min-width:0;min-height:38px!important;border-radius:22px!important;font-size:13px!important;font-weight:700!important;background:linear-gradient(120deg,#eb4f78,#bc337c)!important;color:#fff!important}
+html.cw-source-lottery #app .Wallet__C-balance-l3>div+div{background:linear-gradient(120deg,#20bd81,#0a8d64)!important}
+
+/* Improve 5D result contrast and use solid wallet actions. */
+html.cw-source-lottery #app .FD__C .GameRecord__C-body{color:#fff!important}
+html.cw-source-lottery #app .FD__C .GameRecord__C-body .numList>.numItem{color:#fff!important;border-color:#a791bd!important;font-weight:600!important;background:#2e2043!important}
+html.cw-source-lottery #app .FD__C .Wallet__C-balance-l3>div{background:#cf327c!important;color:#fff!important;opacity:1!important;position:relative;z-index:1}
+html.cw-source-lottery #app .FD__C .Wallet__C-balance-l3>div+div{background:#009d70!important;color:#fff!important}
+
+/* One customer-service shortcut on home, none on game or catalog screens. */
+html.cw-embedded .float,html.cw-embedded .pwa-btn,html.cw-embedded .pwa-btn__close{display:none!important}
+html.cw-embedded:not(.cw-native-home) #customerId{display:none!important}
+html.cw-native-home #customerId{display:block!important}
+html.cw-native-home #customerId>img{width:100%!important;height:100%!important;object-fit:contain!important}
+
+html.cw-embedded .changlongEnter,html.cw-embedded .changlong{display:none!important}
+
+#app .WinTrx__C .TimeLeft__C-l1-r{display:none!important}
+#app .WinTrx__C .GameRecord__C-head .van-col:nth-child(2),#app .WinTrx__C .GameRecord__C-head .van-col:nth-child(3),#app .WinTrx__C .GameRecord__C-head .van-col:nth-child(4),#app .WinTrx__C .GameRecord__C-body>.van-row>.van-col:nth-child(2),#app .WinTrx__C .GameRecord__C-body>.van-row>.van-col:nth-child(3),#app .WinTrx__C .GameRecord__C-body>.van-row>.van-col:nth-child(4){display:none!important}
+#app .WinTrx__C .GameRecord__C-head .van-col:first-child,#app .WinTrx__C .GameRecord__C-body>.van-row>.van-col:first-child{flex:0 0 65%!important;max-width:65%!important}
+#app .WinTrx__C .GameRecord__C-head .van-col:last-child,#app .WinTrx__C .GameRecord__C-body>.van-row>.van-col:last-child{flex:0 0 35%!important;max-width:35%!important}
+.cw-trx-random-note{color:#c4afd7;font-size:10px;text-align:center;margin:7px 12px 0}
+
+#app .WinTrx__C .TimeLeft__C{background:radial-gradient(ellipse at 0 0,#dd49f16b,transparent 60%),linear-gradient(115deg,#7623b0 0%,#ab2eab 45%,#43249b 100%)!important;box-shadow:inset 0 1px #f1b4ff66!important}
+
+html.cw-embedded #app>.tabbar{display:none!important}

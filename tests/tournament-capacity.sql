@@ -1,0 +1,20 @@
+begin;
+do $$declare a uuid:=gen_random_uuid();b uuid:=gen_random_uuid();c uuid:=gen_random_uuid();tm uuid:=gen_random_uuid();result jsonb;begin
+ insert into auth.users(id,email,raw_user_meta_data) values(a,a::text||'@invalid.test','{"phone":"991777111101"}'),(b,b::text||'@invalid.test','{"phone":"991777111102"}'),(c,c::text||'@invalid.test','{"phone":"991777111103"}');
+ insert into public.cw_tournaments(id,title,game,mode,status,banner,entry_fee,prize_pool,capacity,starts_at,rules) values(tm,'Capacity fixture','ff','Solo','open','assets/tournaments/free-fire-red.png',0,500,2,now()-interval '1 hour','Fixture rules');
+ update colorwin_private.site_settings set value=jsonb_set(value,'{tournamentsEnabled}','true') where key='site';
+ perform set_config('request.jwt.claims',jsonb_build_object('sub',a,'role','authenticated')::text,true);
+ perform public.colorwin_tournament('join',jsonb_build_object('id',tm,'player_id','12345678','player_name','Player A'));
+ result:=public.colorwin_tournament('load','{}');
+ if not exists(select 1 from jsonb_array_elements(result->'tournaments') t where t->>'id'=tm::text and (t->>'joined_count')::int=1) then raise exception 'Live count missing';end if;
+ update public.cw_tournaments set registration_closed=true where id=tm;
+ perform set_config('request.jwt.claims',jsonb_build_object('sub',b,'role','authenticated')::text,true);
+ begin perform public.colorwin_tournament('join',jsonb_build_object('id',tm,'player_id','22345678','player_name','Player B'));raise exception 'Closed registration accepted';exception when raise_exception then if sqlerrm<>'Registration closed' then raise;end if;end;
+ update public.cw_tournaments set registration_closed=false where id=tm;
+ perform public.colorwin_tournament('join',jsonb_build_object('id',tm,'player_id','22345678','player_name','Player B'));
+ perform set_config('request.jwt.claims',jsonb_build_object('sub',c,'role','authenticated')::text,true);
+ begin perform public.colorwin_tournament('join',jsonb_build_object('id',tm,'player_id','32345678','player_name','Player C'));raise exception 'Full registration accepted';exception when raise_exception then if sqlerrm<>'Tournament full' then raise;end if;end;
+ if (select count(*) from public.cw_tournament_entries where tournament_id=tm)<>2 then raise exception 'Capacity exceeded';end if;
+end $$;
+select 'PASS: time passed stays open, live count, manual close/reopen, full rejected' as result;
+rollback;

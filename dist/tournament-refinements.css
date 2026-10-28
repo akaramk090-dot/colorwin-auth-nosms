@@ -1,0 +1,32 @@
+.tn-page{font-family:'Inter Variable',system-ui,sans-serif}
+.account-tabbar .tabbar-tournaments .tournament-characters{max-width:none;flex-shrink:0}
+.tn-section-heading>div>span{font-size:9px;font-weight:650;letter-spacing:2px;color:#d3b5f0}
+.tn-section-heading h2{font-size:clamp(25px,7vw,32px);font-weight:850;font-style:italic;letter-spacing:-1px;line-height:1.2;background:linear-gradient(100deg,#ff6a88 0%,#ffae62 17%,#ffe879 33%,#77efb1 50%,#75d8ff 67%,#b698ff 83%,#ff89df 100%);background-clip:text;-webkit-background-clip:text;color:transparent;filter:drop-shadow(0 2px 8px #f392ce25);margin-top:8px}
+.tn-card-meta{display:grid;grid-template-columns:1fr 1fr;gap:8px;align-items:start}
+.tn-card-meta>div:nth-child(2){justify-content:flex-end;text-align:right}
+.tn-card-meta .tn-timing{grid-column:1/-1;padding-top:9px;border-top:1px solid #b99ac822}
+.tn-card-meta .tn-timing>span{display:grid;grid-template-columns:1fr auto;align-items:center;column-gap:10px;width:100%}
+.tn-card-meta .tn-timing strong{grid-column:1}
+.tn-card-meta .tn-timing .tn-joining-status{grid-column:2;grid-row:1/3;margin-top:0}
+.tn-card-meta>div{min-width:0;display:flex;align-items:center;gap:7px}
+.tn-card-meta span{font-size:9px;line-height:1.4}
+.tn-card-meta strong{display:block;font-size:11px;line-height:1.45;margin-top:3px;overflow-wrap:anywhere}
+.tn-timing strong small{display:block;font-size:9px;font-weight:500;color:#cbbada;margin-top:2px}
+.tn-card-meta .tn-timing strong{white-space:nowrap;font-size:10px;overflow-wrap:normal}
+.tn-joining-status{display:inline-flex;align-items:center;gap:4px;margin-top:5px;padding:3px 6px;border:1px solid #56d6b544;border-radius:6px;color:#94f6d6;background:#1e654328;font-size:9px!important;white-space:nowrap;font-weight:650}
+.tn-joining-status i{width:5px;height:5px;border-radius:50%;background:#61e9b9;box-shadow:0 0 5px #61e9b977}
+.cw-trophy{width:25px;height:25px;object-fit:contain;flex:none}
+.tn-empty>.cw-trophy,.tn-dialog>.cw-trophy{width:48px;height:48px}
+.tn-my-banner>.cw-trophy{width:32px;height:32px}
+.tn-detail-box h3 .cw-trophy{vertical-align:middle}
+.tn-history-image{width:26px;height:26px;object-fit:contain}
+.tn-empty>.tn-history-image{width:44px;height:44px}
+.tn-registration-note{display:block;margin:-6px 0 18px;color:#bda9cc;font-size:11px;line-height:1.5}
+#tn-join input[readonly]{color:#ffe1a4;background:#291d3e;border-color:#bd874744;font-weight:700}
+.tn-card-title h3{font-weight:750;letter-spacing:-.2px}
+.tn-details{font-weight:750;letter-spacing:.3px;margin-top:14px}
+@media(max-width:350px){.tn-card-meta{gap:5px}.tn-card-meta>div{gap:4px}.tn-card-meta .cw-trophy{width:20px;height:20px}.tn-card-meta strong{font-size:10px}}
+.tn-owned-panel{margin:0 0 22px;border:1px solid #a259c35c;border-radius:16px;background:linear-gradient(135deg,#211339,#11152d);padding:14px;min-width:0}.tn-owned-heading{display:flex;align-items:center;justify-content:space-between;gap:8px}.tn-owned-heading h2{font-size:17px;margin:0;font-weight:750}.tn-owned-heading>span{font-size:8px;letter-spacing:1.4px;color:#e7bd78}.tn-owned-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;margin:14px 0}.tn-owned-tabs button{border:1px solid #77518d66;border-radius:9px;background:#16182f;color:#c9bfda;font:600 11px Inter,system-ui,sans-serif;padding:10px 3px;cursor:pointer}.tn-owned-tabs button[aria-selected=true]{background:linear-gradient(110deg,#9e2ed9,#d139a9);color:#fff;border-color:#ed87e5}.tn-owned-empty{font-size:12px;line-height:1.6;color:#bfb3d1;padding:14px 4px}.tn-owned-card{overflow:hidden;background:#111329;border:1px solid #5e426f;border-radius:12px;margin-top:10px}.tn-owned-card>img{display:block;width:100%;height:auto;aspect-ratio:8/3;object-fit:contain}.tn-owned-card>div{padding:12px}.tn-owned-card h3{font-size:15px;margin:6px 0}.tn-owned-card p{font-size:11px;color:#bfc2db;line-height:1.5;margin:5px 0}.tn-owned-state{font-size:9px;letter-spacing:.6px;color:#f0c677;font-weight:700}.tn-owned-card .tn-primary{display:block;text-decoration:none;text-align:center;padding:10px;font-size:12px;margin-top:10px}.tn-match-name{display:flex;gap:8px;justify-content:space-between;align-items:center;margin-bottom:12px}.tn-match-name h3{font-size:15px;margin:0}.tn-match-name>span{color:#95edc9;background:#14543c55;padding:4px 7px;border-radius:6px;font-size:9px;font-weight:700}.tn-card-image-banner .tn-card-title{display:none}.tn-card-top.tn-card-image-banner{height:auto;min-height:0;aspect-ratio:8/3}.tn-card-image-banner .tn-supplied-banner{height:100%;object-fit:contain;width:100%}.tn-status-tabs button{font-size:11px}.tn-my-icon small{font-size:8px}
+.tn-page .tn-primary[data-tn-room]{background:linear-gradient(110deg,#f04468 0%,#ff9147 18%,#f4d44a 36%,#2fc783 54%,#36a9e9 72%,#a749e7 88%,#e443ba 100%);color:#151329;font-weight:800;text-shadow:0 1px 1px rgba(255,255,255,.35);border:1px solid rgba(255,255,255,.3)}
+
+.tn-page .tn-primary[data-tn-room]:disabled{color:#151329;-webkit-text-fill-color:#151329;cursor:not-allowed}

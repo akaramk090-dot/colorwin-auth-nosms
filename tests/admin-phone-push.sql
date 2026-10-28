@@ -1,0 +1,21 @@
+begin;do $$ declare u uuid:=gen_random_uuid();raw text:=encode(extensions.gen_random_bytes(32),'hex');v bigint;d uuid;w uuid;m uuid;ep text;sub jsonb;result jsonb;begin
+insert into auth.users(id,email,raw_user_meta_data) values(u,u||'@invalid.test','{"phone":"99187770021"}');
+insert into colorwin_private.admin_members(user_id,role) values(u,'owner');
+select version into v from colorwin_private.admin_token_config where singleton;
+insert into colorwin_private.admin_key_sessions(session_hash,user_id,version,expires_at) values(encode(extensions.digest(raw,'sha256'),'hex'),u,v,now()+interval '1 hour');
+ep:='https://fcm.googleapis.com/fcm/send/test-fixture-'||u;sub:=jsonb_build_object('endpoint',ep,'keys',jsonb_build_object('p256dh',repeat('A',87),'auth',repeat('B',22)));
+perform public.colorwin_admin_push(raw,'subscribe',jsonb_build_object('subscription',sub,'origin','https://9bk0d38n-5173.inc1.devtunnels.ms'));
+result:=public.colorwin_admin_push(raw,'status',jsonb_build_object('endpoint',ep));if not (result->>'enabled')::boolean then raise exception 'Device not registered';end if;
+insert into public.cw_deposit_requests(user_id,amount,method,recipient_upi,recipient_name) values(u,300,'upi','test@upi','Test') returning id into d;
+if exists(select 1 from colorwin_private.admin_push_events where request_id=d) then raise exception 'Unsubmitted deposit alerted';end if;
+update public.cw_deposit_requests set status='pending',utr='599877720021' where id=d;
+update public.cw_deposit_requests set status='pending' where id=d;
+if (select count(*) from colorwin_private.admin_push_events where request_id=d and kind='deposit')<>1 then raise exception 'Missing/duplicate deposit alert';end if;
+if (select count(*) from colorwin_private.admin_push_deliveries x join colorwin_private.admin_push_events e on e.id=x.event_id join colorwin_private.admin_push_subscriptions s on s.id=x.subscription_id where e.request_id=d and s.endpoint=ep)<>1 then raise exception 'Delivery missing';end if;
+insert into public.cw_payout_methods(user_id,kind,details) values(u,'upi','{"name":"Test","account":"test@upi"}') returning id into m;
+insert into public.cw_withdraw_requests(user_id,amount,method_id,payout_snapshot) values(u,100,m,'{"kind":"upi","details":{"account":"test@upi"}}') returning id into w;
+if not exists(select 1 from colorwin_private.admin_push_events where request_id=w and kind='withdrawal') then raise exception 'Withdrawal notification missing';end if;
+perform public.colorwin_admin_push(raw,'unsubscribe',jsonb_build_object('endpoint',ep));
+if (public.colorwin_admin_push(raw,'status',jsonb_build_object('endpoint',ep))->>'enabled')::boolean then raise exception 'Disable failed';end if;
+execute 'set local role authenticated';begin perform public.colorwin_admin_push_backend('config');raise exception 'Private signing keys exposed';exception when insufficient_privilege then null;end;begin perform * from colorwin_private.admin_push_config;raise exception 'Private settings exposed';exception when insufficient_privilege then null;end;execute 'reset role';
+end $$;rollback;

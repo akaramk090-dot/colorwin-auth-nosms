@@ -1,0 +1,2 @@
+// Retired: TRX WinGo now uses the authenticated lottery RPC and server-random draws.
+Deno.serve(req=>new Response(JSON.stringify({error:'TRON chain integration has been removed. Refresh ColorWin to use server-random rounds.'}),{status:req.method==='OPTIONS'?200:410,headers:{'Access-Control-Allow-Origin':'*','Access-Control-Allow-Headers':'authorization,apikey,content-type,x-client-info','Access-Control-Allow-Methods':'POST,OPTIONS','Content-Type':'application/json'}}));

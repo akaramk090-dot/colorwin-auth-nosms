@@ -1,0 +1,21 @@
+begin;
+do $$ declare u uuid:=gen_random_uuid();d uuid:=gen_random_uuid();pid uuid:=gen_random_uuid();r jsonb;begin
+insert into auth.users(id,email,raw_user_meta_data) values(u,u||'@invalid.test','{}');
+insert into public.cw_deposit_requests(id,user_id,amount,method,recipient_upi,recipient_name,gateway_provider) values(d,u,100,'upi','fixture@bank','Fixture','youpi');
+insert into colorwin_private.youpi_payments(deposit_id) values(d);
+execute 'set local role service_role';
+perform public.colorwin_youpi_backend('bind',jsonb_build_object('deposit_id',d,'payment_id',pid,'checkout_url','https://pay.example.com/checkout/'||pid));
+begin perform public.colorwin_youpi_backend('credit',jsonb_build_object('deposit_id',d,'payment_id',pid,'amount_paise',1));raise exception 'Wrong amount accepted';exception when raise_exception then if sqlerrm<>'Payment identity or amount mismatch' then raise;end if;end;
+perform public.colorwin_youpi_backend('credit',jsonb_build_object('deposit_id',d,'payment_id',pid,'amount_paise',10000));
+perform public.colorwin_youpi_backend('credit',jsonb_build_object('deposit_id',d,'payment_id',pid,'amount_paise',10000));
+execute 'reset role';
+if (select sum(amount) from public.account_wallet_ledger where user_id=u)<>100 then raise exception 'Duplicate wallet credit';end if;
+if (select count(*) from public.promotion_deposits where user_id=u)<>1 then raise exception 'Duplicate promotion credit';end if;
+if (select status from public.cw_deposit_requests where id=d)<>'complete' then raise exception 'Order not completed';end if;
+if (select count(*) from public.account_notifications where user_id=u and title='Deposit successful')<>1 then raise exception 'Duplicate deposit notification';end if;
+execute 'set local role authenticated';
+begin perform public.colorwin_youpi_backend('credit','{}');raise exception 'User can credit wallet';exception when insufficient_privilege then null;end;
+begin perform * from colorwin_private.youpi_payments;raise exception 'Private mappings visible';exception when insufficient_privilege then null;end;
+execute 'reset role';
+end $$;
+rollback;

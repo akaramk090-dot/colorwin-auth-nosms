@@ -1,0 +1,10 @@
+.wallet-order header .wallet-status{display:inline-block;padding:0;font-size:12px;font-weight:700;text-transform:capitalize;border:0;line-height:1.4}
+.wallet-order header .wallet-status-blue{color:#58acff;background:none}
+.wallet-order header .wallet-status-red{color:#ff6477;background:none}
+.wallet-order header .wallet-status-green{color:#47db92;background:none}
+.wallet-order header .wallet-status-gray{color:#b5bbc6;background:none}
+.wallet-order header .wallet-status-rainbow{border-color:#b978e777;background:linear-gradient(100deg,#ff698c,#ffb66c,#ffe880,#80efb5,#8edaff,#b59aff,#ff95df);background-clip:text;-webkit-background-clip:text;color:transparent}
+.withdrawal-history-card header b{background:#f45467;color:#fff}
+.withdrawal-history-card dl>div:first-child dd{color:#ffc078;font-weight:700}
+.withdrawal-history-card dd{overflow-wrap:anywhere}
+.withdrawal-history-card dd button{vertical-align:middle;margin-left:7px}

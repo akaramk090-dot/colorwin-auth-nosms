@@ -1,0 +1,60 @@
+# Dependencies and machine-specific tooling
+node_modules/
+.tools/
+.openai/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Credentials, local configuration and private sessions
+.env
+.env.*
+!.env.example
+!.env.*.example
+.secrets/
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+*.sqlite*
+*.db
+*.db-*
+*.log
+logs/
+.tmp/
+.temp/
+*.tmp
+*.temp
+supabase/.temp/
+
+# Gateway payment database, pairing secrets and messaging sessions
+/integrations/youpi/gateway/data/
+/integrations/youpi/gateway/.berry-sessions/
+/integrations/youpi/LOCAL-STATUS.json
+/integrations/youpi/archive.json
+
+# Generated Android output (keep application source)
+.gradle/
+**/build/
+local.properties
+*.apk
+*.aab
+
+# Design experiments and local screenshots, not runtime assets
+/reference-home/*.png
+/reference-home/*.jpg
+/reference-home/*.jpeg
+/reference-home/*.mp4
+/reference-home/*.webm
+/reference/
+/wingo-assets-contact.png
+/wingo-popup-video.jpg
+/wingo-video-contact.jpg
+
+# Upstream demo recordings are LFS pointers without local video objects.
+/integrations/youpi/gateway/assets/Desktop.mp4
+/integrations/youpi/gateway/assets/Mobile.mp4
+# Separate repository accidentally created inside this project.
+/colorwin/

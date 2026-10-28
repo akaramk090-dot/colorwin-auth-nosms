@@ -1,0 +1,24 @@
+begin;
+do $$ declare u uuid:=gen_random_uuid();other_user uuid:=gen_random_uuid();d uuid:=gen_random_uuid();pid uuid:=gen_random_uuid();r jsonb;begin
+insert into auth.users(id,email,raw_user_meta_data) values(u,u||'@invalid.test','{}'),(other_user,other_user||'@invalid.test','{}');
+insert into public.cw_deposit_requests(id,user_id,amount,method,recipient_upi,recipient_name,gateway_provider) values(d,u,100,'upi','legacy@bank','Fixture','youpi');
+insert into colorwin_private.youpi_payments(deposit_id) values(d);
+execute 'set local role service_role';
+perform public.colorwin_youpi_backend('bind',jsonb_build_object('deposit_id',d,'payment_id',pid));
+perform public.colorwin_youpi_checkout_sync(d,pid,'actual@bank','Fixture',now()+interval '5 minutes');
+begin perform public.colorwin_youpi_checkout_sync(d,gen_random_uuid(),'wrong@bank','Fixture',now());raise exception 'Wrong payment accepted';exception when raise_exception then if sqlerrm<>'Payment identity mismatch' then raise;end if;end;
+execute 'reset role';
+perform set_config('request.jwt.claims',jsonb_build_object('sub',u,'role','authenticated')::text,true);
+execute 'set local role authenticated';
+r:=public.colorwin_youpi_order(d);
+if r->'deposit'->>'recipient_upi'<>'actual@bank' then raise exception 'Wrong receiving UPI';end if;
+if r->>'payment_id'<>pid::text then raise exception 'Wrong payment mapping';end if;
+begin perform public.colorwin_youpi_checkout_sync(d,pid,'attacker@bank','Fixture',now());raise exception 'User can change payment receiver';exception when insufficient_privilege then null;end;
+execute 'reset role';
+perform set_config('request.jwt.claims',jsonb_build_object('sub',other_user,'role','authenticated')::text,true);
+execute 'set local role authenticated';
+begin perform public.colorwin_youpi_order(d);raise exception 'Other user can access payment';exception when raise_exception then if sqlerrm<>'Payment order not found' then raise;end if;end;
+execute 'reset role';
+if exists(select 1 from public.account_wallet_ledger where user_id=u) then raise exception 'Checkout credited without bank verification';end if;
+end $$;
+rollback;

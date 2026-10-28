@@ -1,0 +1,19 @@
+.cw-live-orbit{position:relative;width:185px;height:185px;border-radius:50%;background:transparent}.cw-live-orbit img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;clip-path:ellipse(44% 25% at 50% 50%)}.cw-live-orbit:before,.cw-live-orbit:after{content:'';position:absolute;inset:0;border-radius:50%;padding:3px;background:conic-gradient(#32d6ff,#6c43ff,#ef36eb,#ffb737,#32d6ff);mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude;animation:spin 1.8s linear infinite}.cw-live-orbit:after{filter:blur(7px);opacity:.8;padding:6px}/* Premium transparent loader: opposing light trails and restrained orbit sparks. */
+.cw-live-orbit{width:204px;height:204px}
+.cw-live-orbit img{inset:28% 12%;width:76%;height:44%;filter:drop-shadow(0 0 8px #c266ed66)}
+.cw-live-orbit:before{inset:0;padding:3px;background:conic-gradient(from 0deg,transparent 0 45deg,#4c50ff 80deg,#35daff 120deg,#f0ffff 135deg,transparent 148deg 215deg,#aa38ff 255deg,#ff40cd 295deg,#fff0be 315deg,transparent 330deg);animation:spin 2s linear infinite}
+.cw-live-orbit:after{inset:0;padding:4px;filter:blur(7px);opacity:.85;animation:spin 2s linear infinite}
+.cw-live-orbit-guide{inset:11px!important;border-color:#b689df28!important}
+.cw-live-orbit-inner{position:absolute;inset:14px;border:1px solid #9b6dc926;border-radius:50%;background:conic-gradient(transparent 0 230deg,#b574f966 270deg,#62ddff 300deg,transparent 315deg);padding:1px;mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude;animation:spin 3.6s linear infinite reverse}
+.cw-live-orbit-sparks{position:absolute;inset:-4px;animation:spin 4s linear infinite;border-radius:50%;pointer-events:none}
+.cw-live-orbit-sparks i{position:absolute;width:4px;height:4px;border-radius:50%;background:#a6f5ff;box-shadow:0 0 6px 2px #52ddff88}
+.cw-live-orbit-sparks i:nth-child(1){left:50%;top:0}.cw-live-orbit-sparks i:nth-child(2){right:4%;top:73%;background:#ff88df;box-shadow:0 0 7px 2px #f84bdc66}.cw-live-orbit-sparks i:nth-child(3){left:6%;top:75%;width:3px;height:3px;background:#e1b6ff}
+
+@keyframes spin{to{transform:rotate(360deg)}}
+#cw-live-loader{position:fixed;inset:0;z-index:90000;display:grid;place-items:center;background:transparent;pointer-events:auto;isolation:isolate}
+#cw-live-loader[hidden]{display:none!important}
+#cw-live-loader .cw-live-orbit{background:transparent}
+@media(max-width:420px){#cw-live-loader .cw-live-orbit{width:180px;height:180px}}
+@media(prefers-reduced-motion:reduce){#cw-live-loader .cw-live-orbit:before,#cw-live-loader .cw-live-orbit:after,#cw-live-loader .cw-live-orbit-inner{animation:none}}
+
+#cw-live-loader .cw-live-orbit img{clip-path:none;inset:28% 12%;width:76%;height:44%;object-fit:contain;animation:none}

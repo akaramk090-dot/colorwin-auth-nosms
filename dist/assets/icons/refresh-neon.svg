@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none" role="img" aria-labelledby="title">
+<title id="title">Neon refresh icon</title>
+<defs><linearGradient id="neon" x1="8" y1="8" x2="40" y2="40" gradientUnits="userSpaceOnUse"><stop stop-color="#BD38FF"/><stop offset=".55" stop-color="#FF32C6"/><stop offset="1" stop-color="#FFBC46"/></linearGradient></defs>
+<g stroke="url(#neon)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+<path d="M39 19A16 16 0 0 0 10 14M9 29A16 16 0 0 0 38 34"/>
+<path d="M39 9V19H29M9 39V29H19"/>
+</g>
+</svg>

@@ -1,0 +1,757 @@
+[
+  {
+    "path": "/activity/Championship/ChampionshipDetail",
+    "name": "Championship-ChampionshipDetail"
+  },
+  {
+    "path": "/activity/DailySignIn/Record",
+    "name": "DailySignIn-Record"
+  },
+  {
+    "path": "/activity/DailySignIn/Rules",
+    "name": "DailySignIn-Rules"
+  },
+  {
+    "path": "/activity/DailyTasks/Record",
+    "name": "DailyTasks-Record"
+  },
+  {
+    "path": "/activity/MemberPackage/Rules",
+    "name": "MemberPackage-Rules"
+  },
+  {
+    "path": "/activity/PointMall/AddAddress",
+    "name": "PointMall-AddAddress"
+  },
+  {
+    "path": "/activity/PointMall/LotteryActivity",
+    "name": "PointMall-LotteryActivity"
+  },
+  {
+    "path": "/activity/PointMall/LotteryDetail",
+    "name": "PointMall-LotteryDetail"
+  },
+  {
+    "path": "/activity/PointMall/MyLottery",
+    "name": "PointMall-MyLottery"
+  },
+  {
+    "path": "/activity/PointMall/MyOrders",
+    "name": "PointMall-MyOrders"
+  },
+  {
+    "path": "/activity/PointMall/OrderDetail",
+    "name": "PointMall-OrderDetail"
+  },
+  {
+    "path": "/activity/PointMall/ReceiveLottery",
+    "name": "PointMall-ReceiveLottery"
+  },
+  {
+    "path": "/activity/PointMall/Record",
+    "name": "PointMall-Record"
+  },
+  {
+    "path": "/activity/PointMall/Redeem",
+    "name": "PointMall-Redeem"
+  },
+  {
+    "path": "/activity/PointMall/Rules",
+    "name": "PointMall-Rules"
+  },
+  {
+    "path": "/activity/Turntable/Detail",
+    "name": "Turntable-Detail"
+  },
+  {
+    "path": "/activity/Turntable/Introduce",
+    "name": "Turntable-Introduce"
+  },
+  {
+    "path": "/activity/Turntable/Rules",
+    "name": "Turntable-Rules"
+  },
+  {
+    "path": "/home/AllLotteryGames/4D",
+    "name": "AllLotteryGames-4D"
+  },
+  {
+    "path": "/home/AllLotteryGames/4DLotteryResults",
+    "name": "AllLotteryGames-4DLotteryResults"
+  },
+  {
+    "path": "/home/AllLotteryGames/4DOdds",
+    "name": "AllLotteryGames-4DOdds"
+  },
+  {
+    "path": "/home/AllLotteryGames/4DPlay",
+    "name": "AllLotteryGames-4DPlay"
+  },
+  {
+    "path": "/home/AllLotteryGames/4DmyGame",
+    "name": "AllLotteryGames-4DmyGame"
+  },
+  {
+    "path": "/home/AllLotteryGames/5D",
+    "name": "AllLotteryGames-5D"
+  },
+  {
+    "path": "/home/AllLotteryGames/BettingRecord5D",
+    "name": "AllLotteryGames-BettingRecord5D"
+  },
+  {
+    "path": "/home/AllLotteryGames/BettingRecordK3",
+    "name": "AllLotteryGames-BettingRecordK3"
+  },
+  {
+    "path": "/home/AllLotteryGames/BettingRecordWin",
+    "name": "AllLotteryGames-BettingRecordWin"
+  },
+  {
+    "path": "/home/AllLotteryGames/BettingRecordWinTrx",
+    "name": "AllLotteryGames-BettingRecordWinTrx"
+  },
+  {
+    "path": "/home/AllLotteryGames/Binguo",
+    "name": "AllLotteryGames-Binguo"
+  },
+  {
+    "path": "/home/AllLotteryGames/BinguoCount",
+    "name": "AllLotteryGames-BinguoCount"
+  },
+  {
+    "path": "/home/AllLotteryGames/BinguoRecord",
+    "name": "AllLotteryGames-BinguoRecord"
+  },
+  {
+    "path": "/home/AllLotteryGames/ChangLong",
+    "name": "AllLotteryGames-ChangLong"
+  },
+  {
+    "path": "/home/AllLotteryGames/K3",
+    "name": "AllLotteryGames-K3"
+  },
+  {
+    "path": "/home/AllLotteryGames/NewVietnam",
+    "name": "AllLotteryGames-NewVietnam"
+  },
+  {
+    "path": "/home/AllLotteryGames/Play",
+    "name": "AllLotteryGames-Play"
+  },
+  {
+    "path": "/home/AllLotteryGames/WinGo",
+    "name": "AllLotteryGames-WinGo"
+  },
+  {
+    "path": "/home/AllLotteryGames/WinTrx",
+    "name": "AllLotteryGames-WinTrx"
+  },
+  {
+    "path": "/home/AllLotteryGames/WinTrxIframe",
+    "name": "AllLotteryGames-WinTrxIframe"
+  },
+  {
+    "path": "/home/AllLotteryGames/XoSo",
+    "name": "AllLotteryGames-XoSo"
+  },
+  {
+    "path": "/home/AllLotteryGames/XoSoRecord",
+    "name": "AllLotteryGames-XoSoRecord"
+  },
+  {
+    "path": "/home/AllLotteryGames/XoSoRecordF",
+    "name": "AllLotteryGames-XoSoRecordF"
+  },
+  {
+    "path": "/home/Casino/Detail",
+    "name": "Casino-Detail"
+  },
+  {
+    "path": "/home/Chess/Detail",
+    "name": "Chess-Detail"
+  },
+  {
+    "path": "/home/Messages/MessageDetail",
+    "name": "Messages-MessageDetail"
+  },
+  {
+    "path": "/main/About/AboutDetail",
+    "name": "About-AboutDetail"
+  },
+  {
+    "path": "/main/CustomerService/ServiceCollection",
+    "name": "CustomerService-ServiceCollection"
+  },
+  {
+    "path": "/main/GoogleVerify/BindGoogle",
+    "name": "GoogleVerify-BindGoogle"
+  },
+  {
+    "path": "/main/InvitationBonus/Record",
+    "name": "InvitationBonus-Record"
+  },
+  {
+    "path": "/main/InvitationBonus/Rule",
+    "name": "InvitationBonus-Rule"
+  },
+  {
+    "path": "/main/Laundry/LaundryRecord",
+    "name": "Laundry-LaundryRecord"
+  },
+  {
+    "path": "/main/Laundry/LaundryRule",
+    "name": "Laundry-LaundryRule"
+  },
+  {
+    "path": "/main/SettingCenter/BindEmail",
+    "name": "SettingCenter-BindEmail"
+  },
+  {
+    "path": "/main/SettingCenter/LoginPassword",
+    "name": "SettingCenter-LoginPassword"
+  },
+  {
+    "path": "/main/SettingCenter/UpdatePhone",
+    "name": "SettingCenter-UpdatePhone"
+  },
+  {
+    "path": "/main/StrongBox/StrongBoxAbout",
+    "name": "StrongBox-StrongBoxAbout"
+  },
+  {
+    "path": "/main/StrongBox/StrongBoxRecord",
+    "name": "StrongBox-StrongBoxRecord"
+  },
+  {
+    "path": "/main/SuperJackpot/rule",
+    "name": "SuperJackpot-rule"
+  },
+  {
+    "path": "/main/SuperJackpot/star",
+    "name": "SuperJackpot-star"
+  },
+  {
+    "path": "/promotion/MyCommission/MyCommissionDetail",
+    "name": "MyCommission-MyCommissionDetail"
+  },
+  {
+    "path": "/promotion/MyInvitation/InvitationDetail",
+    "name": "MyInvitation-InvitationDetail"
+  },
+  {
+    "path": "/promotion/Server/ServiceCollection",
+    "name": "Server-ServiceCollection"
+  },
+  {
+    "path": "/promotion/TeamPartner/Invitation",
+    "name": "TeamPartner-Invitation"
+  },
+  {
+    "path": "/promotion/TeamReport/TeamReportDetail",
+    "name": "TeamReport-TeamReportDetail"
+  },
+  {
+    "path": "/wallet/RechargeHistory/RechargeUpiDetail",
+    "name": "RechargeHistory-RechargeUpiDetail"
+  },
+  {
+    "path": "/wallet/Withdraw/AddBankCard",
+    "name": "Withdraw-AddBankCard"
+  },
+  {
+    "path": "/wallet/Withdraw/AddFastUpi",
+    "name": "Withdraw-AddFastUpi"
+  },
+  {
+    "path": "/wallet/Withdraw/AddKbz",
+    "name": "Withdraw-AddKbz"
+  },
+  {
+    "path": "/wallet/Withdraw/AddPIX",
+    "name": "Withdraw-AddPIX"
+  },
+  {
+    "path": "/wallet/Withdraw/AddRsnPay",
+    "name": "Withdraw-AddRsnPay"
+  },
+  {
+    "path": "/wallet/Withdraw/AddType4",
+    "name": "Withdraw-AddType4"
+  },
+  {
+    "path": "/wallet/Withdraw/AddUSDT",
+    "name": "Withdraw-AddUSDT"
+  },
+  {
+    "path": "/wallet/Withdraw/AddUpi",
+    "name": "Withdraw-AddUpi"
+  },
+  {
+    "path": "/wallet/Withdraw/AddWave",
+    "name": "Withdraw-AddWave"
+  },
+  {
+    "path": "/wallet/Withdraw/BankCard",
+    "name": "Withdraw-BankCard"
+  },
+  {
+    "path": "/wallet/Withdraw/C2cDetail",
+    "name": "Withdraw-C2cDetail"
+  },
+  {
+    "path": "/wallet/Withdraw/ChooseBank",
+    "name": "Withdraw-ChooseBank"
+  },
+  {
+    "path": "/wallet/Withdraw/FastUpi",
+    "name": "Withdraw-FastUpi"
+  },
+  {
+    "path": "/wallet/Withdraw/PIX",
+    "name": "Withdraw-PIX"
+  },
+  {
+    "path": "/wallet/Withdraw/RsnPay",
+    "name": "Withdraw-RsnPay"
+  },
+  {
+    "path": "/wallet/Withdraw/Type4",
+    "name": "Withdraw-Type4"
+  },
+  {
+    "path": "/wallet/Withdraw/USDT",
+    "name": "Withdraw-USDT"
+  },
+  {
+    "path": "/wallet/Withdraw/Upi",
+    "name": "Withdraw-Upi"
+  },
+  {
+    "path": "/wallet/Withdraw/c2cCancelWithdrawal",
+    "name": "Withdraw-c2cCancelWithdrawal"
+  },
+  {
+    "path": "/wallet/Withdraw/c2cWrongAmount",
+    "name": "Withdraw-c2cWrongAmount"
+  },
+  {
+    "path": "/wallet/WithdrawHistory/WithdrawHistoryDetail",
+    "name": "WithdrawHistory-WithdrawHistoryDetail"
+  },
+  {
+    "path": "/activity/ActivityDetail",
+    "name": "ActivityDetail"
+  },
+  {
+    "path": "/activity/Bonus",
+    "name": "Bonus"
+  },
+  {
+    "path": "/activity/Championship",
+    "name": "Championship"
+  },
+  {
+    "path": "/activity/DailySignIn",
+    "name": "DailySignIn"
+  },
+  {
+    "path": "/activity/DailyTasks",
+    "name": "DailyTasks"
+  },
+  {
+    "path": "/activity/FirstRecharge",
+    "name": "FirstRecharge"
+  },
+  {
+    "path": "/activity/MemberPackage",
+    "name": "MemberPackage"
+  },
+  {
+    "path": "/activity/PointMall",
+    "name": "PointMall"
+  },
+  {
+    "path": "/activity/Turntable",
+    "name": "Turntable"
+  },
+  {
+    "path": "/arupi/Appeal",
+    "name": "Appeal"
+  },
+  {
+    "path": "/arupi/Fail",
+    "name": "Fail"
+  },
+  {
+    "path": "/arupi/Payment",
+    "name": "Payment"
+  },
+  {
+    "path": "/arupi/arupi_v2",
+    "name": "arupi_v2"
+  },
+  {
+    "path": "/arupi/kycAppeal",
+    "name": "kycAppeal"
+  },
+  {
+    "path": "/arupi/kycAppeal_v2",
+    "name": "kycAppeal_v2"
+  },
+  {
+    "path": "/downloadCenter/empty",
+    "name": "empty"
+  },
+  {
+    "path": "/downloadCenter/ios",
+    "name": "ios"
+  },
+  {
+    "path": "/home/AllGames",
+    "name": "AllGames"
+  },
+  {
+    "path": "/home/AllOnlineGames",
+    "name": "AllOnlineGames"
+  },
+  {
+    "path": "/home/Casino",
+    "name": "Casino"
+  },
+  {
+    "path": "/home/Chess",
+    "name": "Chess"
+  },
+  {
+    "path": "/home/FishGames",
+    "name": "FishGames"
+  },
+  {
+    "path": "/home/Fishing",
+    "name": "Fishing"
+  },
+  {
+    "path": "/home/HotGames",
+    "name": "HotGames"
+  },
+  {
+    "path": "/home/Lottery",
+    "name": "Lottery"
+  },
+  {
+    "path": "/home/Messages",
+    "name": "Messages"
+  },
+  {
+    "path": "/home/Original",
+    "name": "Original"
+  },
+  {
+    "path": "/home/Slots",
+    "name": "Slots"
+  },
+  {
+    "path": "/home/eSports",
+    "name": "eSports"
+  },
+  {
+    "path": "/home/game",
+    "name": "game"
+  },
+  {
+    "path": "/main/About",
+    "name": "About"
+  },
+  {
+    "path": "/main/Avatar",
+    "name": "Avatar"
+  },
+  {
+    "path": "/main/BetRecords",
+    "name": "BetRecords"
+  },
+  {
+    "path": "/main/CustomerService",
+    "name": "CustomerService"
+  },
+  {
+    "path": "/main/Feedback",
+    "name": "Feedback"
+  },
+  {
+    "path": "/main/GameStats",
+    "name": "GameStats"
+  },
+  {
+    "path": "/main/GoogleVerify",
+    "name": "GoogleVerify"
+  },
+  {
+    "path": "/main/Guide",
+    "name": "Guide"
+  },
+  {
+    "path": "/main/InvitationBonus",
+    "name": "InvitationBonus"
+  },
+  {
+    "path": "/main/Language",
+    "name": "Language"
+  },
+  {
+    "path": "/main/Laundry",
+    "name": "Laundry"
+  },
+  {
+    "path": "/main/MyCoins",
+    "name": "MyCoins"
+  },
+  {
+    "path": "/main/MyCps",
+    "name": "MyCps"
+  },
+  {
+    "path": "/main/Notification",
+    "name": "Notification"
+  },
+  {
+    "path": "/main/PointDetail",
+    "name": "PointDetail"
+  },
+  {
+    "path": "/main/RechargeCoupon",
+    "name": "RechargeCoupon"
+  },
+  {
+    "path": "/main/RedeemGift",
+    "name": "RedeemGift"
+  },
+  {
+    "path": "/main/SettingCenter",
+    "name": "SettingCenter"
+  },
+  {
+    "path": "/main/StrongBox",
+    "name": "StrongBox"
+  },
+  {
+    "path": "/main/SuperJackpot",
+    "name": "SuperJackpot"
+  },
+  {
+    "path": "/promotion/CommissionDetail",
+    "name": "CommissionDetail"
+  },
+  {
+    "path": "/promotion/MyCommission",
+    "name": "MyCommission"
+  },
+  {
+    "path": "/promotion/MyInvitation",
+    "name": "MyInvitation"
+  },
+  {
+    "path": "/promotion/MyReceive",
+    "name": "MyReceive"
+  },
+  {
+    "path": "/promotion/PromotionRule",
+    "name": "PromotionRule"
+  },
+  {
+    "path": "/promotion/PromotionShare",
+    "name": "PromotionShare"
+  },
+  {
+    "path": "/promotion/RebateRatio",
+    "name": "RebateRatio"
+  },
+  {
+    "path": "/promotion/Server",
+    "name": "Server"
+  },
+  {
+    "path": "/promotion/Subordinate",
+    "name": "Subordinate"
+  },
+  {
+    "path": "/promotion/TeamPartner",
+    "name": "TeamPartner"
+  },
+  {
+    "path": "/promotion/TeamReport",
+    "name": "TeamReport"
+  },
+  {
+    "path": "/saasLottery/D5",
+    "name": "D5"
+  },
+  {
+    "path": "/saasLottery/K3",
+    "name": "K3"
+  },
+  {
+    "path": "/saasLottery/MotoRace",
+    "name": "MotoRace"
+  },
+  {
+    "path": "/saasLottery/SaasChangLong",
+    "name": "SaasChangLong"
+  },
+  {
+    "path": "/saasLottery/TrxWinGo",
+    "name": "TrxWinGo"
+  },
+  {
+    "path": "/saasLottery/VideoWinGo",
+    "name": "VideoWinGo"
+  },
+  {
+    "path": "/saasLottery/WinGo",
+    "name": "WinGo"
+  },
+  {
+    "path": "/saasLottery/WinGoRecord",
+    "name": "WinGoRecord"
+  },
+  {
+    "path": "/saasLottery/TrxWinGoRecord",
+    "name": "TrxWinGoRecord"
+  },
+  {
+    "path": "/saasLottery/K3Record",
+    "name": "K3Record"
+  },
+  {
+    "path": "/saasLottery/D5Record",
+    "name": "D5Record"
+  },
+  {
+    "path": "/turntable/withdrawHistory",
+    "name": "withdrawHistory"
+  },
+  {
+    "path": "/vip/RebateDetails",
+    "name": "RebateDetails"
+  },
+  {
+    "path": "/vip/RecordVsruleHistory",
+    "name": "RecordVsruleHistory"
+  },
+  {
+    "path": "/wallet/ArbRule",
+    "name": "ArbRule"
+  },
+  {
+    "path": "/wallet/BankStatus",
+    "name": "BankStatus"
+  },
+  {
+    "path": "/wallet/CancelRecharge",
+    "name": "CancelRecharge"
+  },
+  {
+    "path": "/wallet/OrderCancel",
+    "name": "OrderCancel"
+  },
+  {
+    "path": "/wallet/OtherPay",
+    "name": "OtherPay"
+  },
+  {
+    "path": "/wallet/Recharge",
+    "name": "Recharge"
+  },
+  {
+    "path": "/wallet/RechargeArUpi",
+    "name": "RechargeArUpi"
+  },
+  {
+    "path": "/wallet/RechargeDetail",
+    "name": "RechargeDetail"
+  },
+  {
+    "path": "/wallet/RechargeHistory",
+    "name": "RechargeHistory"
+  },
+  {
+    "path": "/wallet/RechargeUsdt",
+    "name": "RechargeUsdt"
+  },
+  {
+    "path": "/wallet/TransAction",
+    "name": "TransAction"
+  },
+  {
+    "path": "/wallet/Withdraw",
+    "name": "Withdraw"
+  },
+  {
+    "path": "/wallet/WithdrawHistory",
+    "name": "WithdrawHistory"
+  },
+  {
+    "path": "/activity",
+    "name": "activity"
+  },
+  {
+    "path": "/arWallet",
+    "name": "arWallet"
+  },
+  {
+    "path": "/arupi",
+    "name": "arupi"
+  },
+  {
+    "path": "/downloadCenter",
+    "name": "downloadCenter"
+  },
+  {
+    "path": "/installApp",
+    "name": "installApp"
+  },
+  {
+    "path": "/login",
+    "name": "login"
+  },
+  {
+    "path": "/main",
+    "name": "main"
+  },
+  {
+    "path": "/maintenance",
+    "name": "maintenance"
+  },
+  {
+    "path": "/promotion",
+    "name": "promotion"
+  },
+  {
+    "path": "/register",
+    "name": "register"
+  },
+  {
+    "path": "/rpwd",
+    "name": "rpwd"
+  },
+  {
+    "path": "/turntable",
+    "name": "turntable"
+  },
+  {
+    "path": "/vip",
+    "name": "vip"
+  },
+  {
+    "path": "/wallet",
+    "name": "wallet"
+  },
+  {
+    "path": "/",
+    "name": "home"
+  },
+  {
+    "path": "/:pathMatch(.*)"
+  }
+]

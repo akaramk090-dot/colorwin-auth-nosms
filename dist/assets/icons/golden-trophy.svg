@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" fill="none" role="img" aria-labelledby="title desc">
+  <title id="title">Golden trophy</title>
+  <desc id="desc">Shiny gold championship cup with two handles, a star and a gold pedestal on a transparent background.</desc>
+  <defs>
+    <linearGradient id="gold" x1="146" y1="90" x2="359" y2="279" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF5B0"/><stop offset=".23" stop-color="#FFD75A"/><stop offset=".51" stop-color="#F5B719"/><stop offset=".76" stop-color="#D78B05"/><stop offset="1" stop-color="#A65A03"/>
+    </linearGradient>
+    <linearGradient id="metal" x1="174" y1="0" x2="341" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#A65B03"/><stop offset=".24" stop-color="#F8BB2C"/><stop offset=".46" stop-color="#FFF1A1"/><stop offset=".64" stop-color="#FFD24B"/><stop offset="1" stop-color="#BE7605"/>
+    </linearGradient>
+    <linearGradient id="handle" x1="68" y1="103" x2="437" y2="256" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFE889"/><stop offset=".4" stop-color="#ECAE1B"/><stop offset=".7" stop-color="#FFE178"/><stop offset="1" stop-color="#AE6604"/>
+    </linearGradient>
+    <linearGradient id="rim" x1="134" y1="73" x2="377" y2="98" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF8CA"/><stop offset=".5" stop-color="#FFDE64"/><stop offset="1" stop-color="#CC8A0B"/>
+    </linearGradient>
+    <linearGradient id="star" x1="235" y1="145" x2="282" y2="216" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF9D2"/><stop offset="1" stop-color="#FFE18A"/>
+    </linearGradient>
+  </defs>
+  <!-- Hollow handles -->
+  <path d="M143 114H89C81 114 76 120 76 128V151C76 209 111 243 161 246" stroke="#9D5906" stroke-width="28" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M369 114H423C431 114 436 120 436 128V151C436 209 401 243 351 246" stroke="#9D5906" stroke-width="28" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M143 111H89C81 111 76 117 76 125V148C76 206 111 240 161 243M369 111H423C431 111 436 117 436 125V148C436 206 401 240 351 243" stroke="url(#handle)" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Stem and foot -->
+  <path d="M232 266H280V323C280 348 295 365 321 374H191C217 365 232 348 232 323V266Z" fill="url(#metal)" stroke="#B1740A" stroke-width="3"/>
+  <path d="M241 283V325C241 344 235 355 226 365" stroke="#FFF0A1" stroke-opacity=".7" stroke-width="7" stroke-linecap="round"/>
+  <rect x="177" y="367" width="158" height="24" rx="12" fill="url(#rim)" stroke="#CB8D14" stroke-width="3"/>
+  <!-- Cup -->
+  <path d="M137 88H375L360 186C351 246 311 284 256 284C201 284 161 246 152 186L137 88Z" fill="url(#gold)" stroke="#B97909" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M163 111L174 182C180 219 195 243 221 257" stroke="#FFF6B4" stroke-width="12" stroke-opacity=".76" stroke-linecap="round"/>
+  <path d="M348 112L338 181C332 221 314 249 286 262" stroke="#A76A06" stroke-width="7" stroke-opacity=".3" stroke-linecap="round"/>
+  <path d="M256 139L269 166L299 170L277 192L282 222L256 208L230 222L235 192L213 170L243 166L256 139Z" fill="#B87708" transform="translate(0 3)"/>
+  <path d="M256 139L269 166L299 170L277 192L282 222L256 208L230 222L235 192L213 170L243 166L256 139Z" fill="url(#star)" stroke="#F9D35A" stroke-width="2" stroke-linejoin="round"/>
+  <rect x="128" y="74" width="256" height="28" rx="14" fill="url(#rim)" stroke="#D5971B" stroke-width="3"/>
+  <path d="M144 82H354" stroke="#FFF9D8" stroke-width="4" stroke-linecap="round" opacity=".85"/>
+  <!-- Pedestal -->
+  <path d="M169 390C169 384 174 380 180 380H332C338 380 343 384 343 390V432H169V390Z" fill="url(#metal)" stroke="#AF700A" stroke-width="3"/>
+  <rect x="145" y="425" width="222" height="35" rx="10" fill="url(#gold)" stroke="#AF700A" stroke-width="3"/>
+  <path d="M158 433H350" stroke="#FFF0A0" stroke-width="4" stroke-linecap="round"/>
+  <rect x="214" y="391" width="84" height="23" rx="5" fill="#A4680B"/>
+  <rect x="217" y="393" width="78" height="19" rx="4" fill="url(#rim)"/>
+  <!-- Small metallic glints -->
+  <path d="M398 51L402 65L416 69L402 73L398 87L394 73L380 69L394 65L398 51Z" fill="#FFE697"/>
+  <path d="M105 265L108 275L118 278L108 281L105 291L102 281L92 278L102 275L105 265Z" fill="#FFD558"/>
+</svg>

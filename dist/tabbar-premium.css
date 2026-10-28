@@ -1,0 +1,37 @@
+/* Original cutout PNG frame, with a gold active state. */
+.account-tabbar{position:fixed!important;left:50%!important;bottom:max(8px,env(safe-area-inset-bottom))!important;transform:translateX(-50%)!important;width:min(430px,calc(100vw - 12px))!important;height:auto!important;aspect-ratio:2012/438!important;display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;padding:0 4px!important;border:0!important;border-radius:0!important;background:transparent!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;box-shadow:none!important;filter:drop-shadow(0 4px 9px #aa37bf38)!important;overflow:visible!important;isolation:isolate}
+.account-tabbar:before{content:''!important;position:absolute!important;inset:0!important;width:auto!important;height:auto!important;background:url('assets/web%20images/tabbar-frame.png') center/100% 100% no-repeat!important;border:0!important;z-index:1!important;pointer-events:none!important}
+.account-tabbar .tabbar-item,.account-tabbar .tabbar-reward{position:relative!important;z-index:2!important;display:flex!important;min-height:0!important;min-width:0!important;flex-direction:column!important;align-items:center!important;justify-content:flex-end!important;gap:0!important;padding:0 1px 24px!important;background:transparent!important;border:0!important;border-radius:0!important;color:#c8c9f4!important;font-size:8px!important;line-height:1!important;font-weight:650!important;text-shadow:none!important;letter-spacing:0!important;-webkit-tap-highlight-color:transparent}
+.account-tabbar .tabbar-icon{display:block!important;width:29px!important;height:29px!important;margin:0 0 5px!important;object-fit:contain!important;opacity:1!important;filter:none!important;transform:none!important;transition:filter .15s}
+.account-tabbar .tabbar-item.is-current{color:#ffe58b!important;text-shadow:0 0 7px #e6ab3f66!important}
+.account-tabbar .tabbar-item.is-current .tabbar-icon{filter:sepia(1) saturate(3.5) hue-rotate(355deg) brightness(1.13) drop-shadow(0 0 4px #ffc85855)!important}
+.account-tabbar .tabbar-tournaments:before,.account-tabbar .tabbar-tournaments:after{content:none!important;display:none!important}
+.account-tabbar .tabbar-tournaments{padding-bottom:26px!important;font-size:8px!important;overflow:visible!important}
+.account-tabbar .tabbar-tournaments .tournament-characters{position:absolute!important;left:50%!important;top:calc(37.67% - 64px)!important;width:82px!important;height:82px!important;transform:translateX(-50%)!important;object-fit:contain!important;object-position:center bottom!important;filter:drop-shadow(0 2px 5px #c52ddd66)!important;z-index:0!important}
+.account-tabbar .tabbar-tournaments .tournament-label{position:relative!important;z-index:2!important;font-size:8px!important;line-height:1!important;font-weight:750!important;white-space:nowrap!important;background-color:transparent!important;-webkit-text-fill-color:currentColor!important;color:#c8c9f4!important;text-shadow:0 1px 3px #160924!important}
+.account-tabbar .tabbar-tournaments.is-current .tournament-label{color:#ffe58b!important;text-shadow:0 0 7px #e6ab3f66!important}
+.account-tabbar .tabbar-indicator{position:absolute!important;left:16px!important;right:16px!important;bottom:14px!important;width:auto!important;height:2px!important;border:0!important;border-radius:5px!important;background:#ffe38b!important;box-shadow:0 0 6px #ffc85888!important}
+.account-tabbar button:focus-visible{outline:2px solid #ffe38b;outline-offset:2px}
+@media(max-width:360px){.account-tabbar .tabbar-item{font-size:7px!important}.account-tabbar .tabbar-icon{width:26px!important;height:26px!important}.account-tabbar .tabbar-tournaments .tournament-characters{top:calc(37.67% - 55px)!important;width:72px!important;height:72px!important}.account-tabbar .tabbar-tournaments .tournament-label{font-size:7px!important}}
+@media(prefers-reduced-motion:reduce){.account-tabbar .tabbar-icon{transition:none}}
+
+.account-tabbar [data-tab-action="account"]:not(.is-current) .tabbar-icon{filter:grayscale(1) brightness(1.35)!important}
+
+/* Restore the original character placement behind the cutout frame. */
+.account-tabbar .tabbar-tournaments{z-index:auto!important}
+.account-tabbar .tabbar-tournaments .tournament-characters{top:calc(37.67% - 55px)!important;width:72px!important;height:72px!important;z-index:0!important;pointer-events:none!important}
+.account-tabbar .tabbar-tournaments .tournament-label,.account-tabbar .tabbar-tournaments .tabbar-indicator{z-index:2!important}
+
+/* Keep the raised artwork itself in the tournament button's hit area. */
+.account-tabbar .tabbar-tournaments .tournament-characters{pointer-events:auto!important;cursor:pointer}
+
+.account-tabbar .tabbar-tournaments .tournament-label,.account-tabbar .tabbar-tournaments.is-current .tournament-label{background-clip:text!important;-webkit-background-clip:text!important;-webkit-text-fill-color:transparent!important;color:transparent!important;text-shadow:none!important}
+
+.account-tabbar .tabbar-tournaments .tournament-label{background-size:250% 100%!important;animation:cw-tournament-rgb-run 4s linear infinite}
+@keyframes cw-tournament-rgb-run{0%{background-position:0% 50%}100%{background-position:250% 50%}}
+@media(prefers-reduced-motion:reduce){.account-tabbar .tabbar-tournaments .tournament-label{animation:none}}
+
+/* Animate the background image without shorthand rules resetting its position. */
+.account-tabbar .tabbar-tournaments .tournament-label,.account-tabbar .tabbar-tournaments.is-current .tournament-label{background-image:linear-gradient(90deg,#ff69a9,#ffd45e,#7dffb7,#58dfff,#a787ff,#ff69a9)!important;background-size:200% 100%!important;animation:cw-tournament-rgb-visible 2.4s linear infinite!important}
+@keyframes cw-tournament-rgb-visible{from{background-position-x:200%}to{background-position-x:0%}}
+@media(prefers-reduced-motion:reduce){.account-tabbar .tabbar-tournaments .tournament-label,.account-tabbar .tabbar-tournaments.is-current .tournament-label{animation:none!important}}
