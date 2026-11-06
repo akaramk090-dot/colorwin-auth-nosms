@@ -3,6 +3,8 @@
   if(incoming && /^\d{11}$/.test(incoming)){sessionStorage.setItem('cw_referral',incoming);location.hash='#/register';}
   const esc = value => String(value ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const money = value => '₹'+Number(value || 0).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2});
+  // Keep the established ColorWin icon set on the Agency landing page.
+  // APK-derived SVGs are used only inside their dedicated report subpages.
   const assets={people:'agent-commission',code:'inbox',chart:'notebook',money:'balance',filter:'filter',rules:'receipt',support:'customer-headset',rebate:'money-bag'};
   const icon=name=>'<img class="promo-icon" src="assets/promotion-icons/'+(assets[name] || assets.chart)+'.svg" alt="" aria-hidden="true">';
   const rows = [['rewards','Partner rewards','people'],['code','Copy invitation code','code'],['subordinates','Subordinate data','chart'],['commission','Commission detail','money'],['rules','Invitation rules','rules'],['support','Agent line customer service','support'],['rebate','Rebate ratio','rebate']];
@@ -44,7 +46,7 @@
       const details={rules:['Invitation rules','Every member receives a unique 11-digit invitation code. Share your link to open registration with your code filled in. A successful registration permanently links the new account to its inviter. Only completed, verified deposits count. Direct subordinates are people you invite; team subordinates include their invitation network.'],rewards:['Partner rewards','Partner reward levels have not been configured yet.'],commission:['Commission detail','Commission calculation and payment rules have not been configured yet.'],rebate:['Rebate ratio','Rebate rates have not been configured yet.'],support:['Agent line customer service','An agent support contact has not been configured yet.']};
       const [title,body]=details[action];show(title,`<p>${body}</p>`);
     });
-    if(['rules','support','rebate'].includes(sub)){window.ColorWinPromotionPages.mount(sub,panel,null,{copy,url});return;}
+    if(['rules','support','rebate','subordinates'].includes(sub)){window.ColorWinPromotionPages.mount(sub,panel,null,{copy,url});return;}
     try{
       data=await window.ColorWinAuth.promotion();if(!page.isConnected)return;
       if(sub){page.querySelector('[data-promo]').click();return;}

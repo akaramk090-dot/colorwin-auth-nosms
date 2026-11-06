@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "node scripts/dev.cjs",
     "start": "node scripts/dev.cjs",
-    "test": "node --test tests/auth.test.cjs tests/account-auth.test.cjs tests/support.test.cjs tests/navigation.test.cjs tests/vip.test.cjs tests/tournaments.test.cjs tests/admin-ui.test.cjs tests/dev-server.test.cjs tests/single-session.test.cjs tests/attendance.test.cjs tests/welcome-popups.test.cjs tests/transaction-history.test.cjs tests/withdrawal.test.cjs tests/tournament-notifications.test.cjs tests/admin-phone-push.test.cjs tests/youpi.test.cjs",
+    "test": "node --test tests/auth.test.cjs tests/account-auth.test.cjs tests/support.test.cjs tests/navigation.test.cjs tests/app-routing.test.cjs tests/vip.test.cjs tests/loading.test.cjs tests/tournaments.test.cjs tests/admin-ui.test.cjs tests/admin-panels.test.cjs tests/admin-totp.test.cjs tests/dev-server.test.cjs tests/single-session.test.cjs tests/source-shell.test.cjs tests/attendance.test.cjs tests/welcome-popups.test.cjs tests/transaction-history.test.cjs tests/withdrawal.test.cjs tests/tournament-notifications.test.cjs tests/admin-phone-push.test.cjs tests/youpi.test.cjs",
     "check:edge": "deno check --config supabase/functions/deno.json supabase/functions/account-phone-login/index.ts",
     "test:youpi": "node --test tests/youpi.test.cjs integrations/youpi/gateway/scripts/colorwin-checkout.test.mjs integrations/youpi/gateway/scripts/colorwin-pool.test.mjs"
   },

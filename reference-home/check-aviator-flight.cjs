@@ -1,0 +1,19 @@
+const {chromium}=require('C:/Users/salman/AppData/Local/npm-cache/_npx/af752b90495482d7/node_modules/playwright-core');
+const assert=require('node:assert/strict');
+(async()=>{const browser=await chromium.launch({executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe',headless:true});try{
+const page=await browser.newPage({viewport:{width:390,height:844}});const errors=[];page.on('pageerror',e=>errors.push(e.message));
+await page.route('**/arcade-client.js*',r=>r.fulfill({contentType:'text/javascript',body:`
+window.fixture={id:'flight-0001',phase:'waiting',balance:1000,starts:Date.now()+10000,bets:[],history:[],calls:[]};
+window.CWArcade=async(game,action,data={})=>{const f=fixture;f.calls.push({action,data});if(action==='bet'){const b={id:crypto.randomUUID(),slot:data.slot,amount:data.amount,status:'active',auto_target:data.auto_target};f.bets.push(b);f.balance-=b.amount;}if(action==='cancel'){const b=f.bets.find(b=>b.id===data.id);b.status='cancelled';f.balance+=b.amount;}if(action==='cash'){const b=f.bets.find(b=>b.id===data.id);b.status='cashed';b.result=2.46;b.payout=Math.floor(b.amount*2.46*100)/100;f.balance+=b.payout;f.history.unshift({...b});}return {balance:f.balance,round:{id:f.id,phase:f.phase,starts_at:new Date(f.starts).toISOString(),now:new Date().toISOString(),multiplier:f.phase==='waiting'?1:2.46,bets:f.bets},history:f.history};}; window.CWArcade.newId=()=>crypto.randomUUID();
+`}));
+await page.goto('http://127.0.0.1:5174/games/aviator.html');await page.waitForFunction(()=>document.querySelector('#action0').textContent.includes('BET')&&!document.querySelector('#action0').disabled);
+assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
+await page.screenshot({path:'reference-home/aviator-mobile-waiting.png'});
+await page.locator('#amount0').fill('1.13');await page.locator('#amount0').dispatchEvent('change');await page.locator('#action0').click();await page.waitForFunction(()=>document.querySelector('#action0').textContent.includes('CANCEL'));assert.equal(await page.evaluate(()=>fixture.balance),998.87);
+await page.locator('#action0').click();await page.waitForFunction(()=>document.querySelector('#action0').textContent.includes('BET'));assert.equal(await page.evaluate(()=>fixture.balance),1000);
+await page.locator('[data-slot="1"][data-mode="auto"]').click();await page.locator('#auto1').check();await page.locator('#target1').fill('2.00');await page.locator('#target1').dispatchEvent('change');await page.locator('#action1').click();await page.waitForFunction(()=>document.querySelector('#action1').textContent.includes('CANCEL'));assert.equal(await page.evaluate(()=>fixture.calls.findLast(c=>c.action==='bet').data.auto_target),2);
+await page.evaluate(()=>{fixture.phase='flying';fixture.starts=Date.now()-5000;});await page.waitForFunction(()=>document.querySelector('#action1').textContent.includes('CASH OUT'));await page.waitForTimeout(400);await page.screenshot({path:'reference-home/aviator-mobile-flight.png'});
+await page.locator('#action1').click();await page.locator('#announcement').waitFor();assert.equal(await page.locator('.record.won').count(),1);assert.equal(await page.evaluate(()=>fixture.calls.filter(c=>c.action==='cash').length),1);
+await page.evaluate(()=>fixture.phase='crashed');await page.waitForFunction(()=>document.querySelector('#stage').dataset.phase==='crashed');await page.waitForTimeout(650);assert.equal(await page.locator('#plane').evaluate(e=>getComputedStyle(e).opacity),'0');
+await page.setViewportSize({width:1280,height:850});await page.screenshot({path:'reference-home/aviator-desktop.png'});assert.deepEqual(errors,[]);console.log('PASS mobile overflow, two bet slots, decimal stake, cancel/refund, auto target, cash-out, history, fly-away and desktop layout.');
+}finally{await browser.close()}})().catch(e=>{console.error(e);process.exitCode=1});

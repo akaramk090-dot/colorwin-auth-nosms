@@ -1,6 +1,7 @@
 (() => {
   const svg=path=>`<svg viewBox="0 0 24 24" aria-hidden="true">${path}</svg>`;
-  const back=svg('<path d="m14 5-7 7 7 7"/>'),support=svg('<path d="M4 14v-3a8 8 0 0 1 16 0v3M4 12H2v7h4v-7Zm16 0h2v7h-4v-7ZM18 19c0 2-3 3-6 3"/>'),music=svg('<path d="M9 18V5l11-2v13M9 9l11-2"/><ellipse cx="6" cy="18" rx="3" ry="2"/><ellipse cx="17" cy="16" rx="3" ry="2"/>'),muted=svg('<path d="M9 18V5l11-2v8M9 9l11-2M16 15l6 6m0-6-6 6"/><ellipse cx="6" cy="18" rx="3" ry="2"/>');
+  const iconImage=file=>`<img class="cw-header-icon" src="../assets/png/${file}" alt="" aria-hidden="true" draggable="false">`;
+  const back=svg('<path d="m14 5-7 7 7 7"/>'),support=iconImage('kefu-CWn8Xwlr.png'),music=iconImage('voice-B3roEJIA.png'),muted=iconImage('voice-off-Bu6YwZ1J.png');
   function send(action){if(parent!==window)parent.postMessage({type:'cw-wingo-ui',action},'*');else if(action!=='balance')location.href='../#/'+action;}
   const backBtn=document.querySelector('#backBtn');backBtn.innerHTML=back;backBtn.onclick=()=>send('home');
   const actions=document.createElement('div');actions.className='header-actions';actions.innerHTML=`<button type="button" class="head-icon" id="cwSupport" aria-label="Support">${support}</button><button type="button" class="head-icon" id="cwMusic" aria-label="Toggle music" aria-pressed="true">${music}</button>`;document.querySelector('.header').append(actions);document.querySelector('#cwSupport').onclick=()=>send('support');

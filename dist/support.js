@@ -98,6 +98,16 @@
     page.querySelectorAll('[data-status]').forEach(b=>b.onclick=()=>{status=b.dataset.status;page.querySelectorAll('[data-status]').forEach(el=>el.setAttribute('aria-selected',String(el===b)));paint();});const search=page.querySelector('#cs-search');if(search)search.oninput=paint;
     try{if(!preview())data=await window.ColorWinAuth.accountRpc('colorwin_support_data');paint();}catch{if(page.isConnected)records.innerHTML='<p class="cs-error" role="alert">Records could not be loaded. Please reopen this page to retry.</p>';}
   }
-  window.ColorWinSupport={matches:r=>r===root||r.startsWith(root+'/'),view,bind};
+  const validSupportRoute=r=>{
+    if(r===root||[root+'/faq',root+'/official',root+'/progress'].includes(r))return true;
+    const parts=r.slice(root.length+1).split('/');
+    const [part,sub,extra]=parts;
+    if(part==='ticket')return parts.length===2&&/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(sub||'');
+    if(!labels[part])return false;
+    if(parts.length===1)return true;
+    if(parts.length===2&&['manual','request'].includes(sub))return true;
+    if(parts.length===3&&part==='deposit'&&sub==='request'&&/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(extra||''))return true;
+    return parts.length===2&&sub==='contact'&&rebind.includes(part);
+  };
+  window.ColorWinSupport={matches:validSupportRoute,view,bind};
 })();
-

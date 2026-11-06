@@ -14,6 +14,9 @@ test('Customer Service dispatches to support without being intercepted by accoun
   assert.equal(account.matches(route),false);assert.equal(support.matches(route),true);
  }
  assert.equal(account.matches('#/account/settings'),true);
+ assert.equal(account.matches('#/account/settings/unknown'),false);
+ assert.equal(support.matches('#/support/unknown'),false);
+ assert.equal(support.matches('#/support/bank-rebind/manual/extra'),false);
 });
 test('Every support topic renders and references existing bundled assets',()=>{
  const home=support.view('#/support');

@@ -134,3 +134,7 @@ body>.app{padding-top:50px!important}.app>.header{position:fixed!important;top:0
 .cw-betting-area>.cw-countdown span{background:#281237!important}
 
 .cw-betting-area>.cw-countdown span{color:#d58aff!important}
+
+.header-actions .cw-header-icon{display:block;width:26px;height:26px;object-fit:contain;pointer-events:none}.header-actions .head-icon{display:grid;place-items:center}
+
+#resultOverlay .win-modal:not(.lose-mode) .confetti-layer{display:block!important}@media(prefers-reduced-motion:reduce){#resultOverlay .win-modal:not(.lose-mode) .confetti-layer{display:none!important}}

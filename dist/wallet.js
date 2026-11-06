@@ -191,8 +191,7 @@
       box.querySelectorAll('[data-part]').forEach(b=>b.onclick=()=>{const n=Number(b.dataset.value);if(b.dataset.part==='Year')year=n;else if(b.dataset.part==='Month')month=n;else dayValue=n;draw();});requestAnimationFrame(()=>box.querySelectorAll('.selected').forEach(b=>b.parentElement.scrollTop=b.offsetTop-(b.parentElement.clientHeight-b.clientHeight)/2));};
     dialog.querySelector('[data-cancel]').onclick=()=>dialog.close();dialog.querySelector('[data-confirm]').onclick=()=>{onConfirm(pending);dialog.close();};dialog.querySelector('[data-date-clear]').onclick=()=>{onConfirm('');dialog.close();};dialog.querySelector('[data-date-today]').onclick=()=>{[year,month,dayValue]=date(Date.now()).split('-').map(Number);draw();};dialog.onclick=e=>{if(e.target===dialog)dialog.close();};dialog.onclose=()=>dialog.remove();dialog.showModal();draw();
   }
-  const matches=route=>['#/wallet','#/deposit','#/withdraw','#/deposit/history','#/withdraw/history','#/withdraw/add/upi','#/withdraw/add/bank','#/withdraw/add/usdt'].includes(route)||route.startsWith('#/deposit/pay/');
+  const matches=route=>['#/wallet','#/deposit','#/withdraw','#/deposit/history','#/withdraw/history','#/withdraw/add/upi','#/withdraw/add/bank','#/withdraw/add/usdt'].includes(route)||/^#\/deposit\/pay\/[a-z0-9_-]{1,128}$/i.test(route);
   window.ColorWinWallet={matches,view,bind,bankPicker,sheet,datePicker:walletDatePicker};
 })();
-
 

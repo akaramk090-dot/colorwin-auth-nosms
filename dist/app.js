@@ -589,6 +589,13 @@ function render() {
   window.ColorWinAccount.avatar=selectedAvatar;
   if(!ColorWinAuth.ready)return;
   const current=(location.hash||'#/login').toLowerCase();
+  if(!isKnownRoute(current)){
+    clearTimeout(toastTimer);
+    toastEl.classList.remove('show');
+    app.innerHTML='<section class="route-not-found" role="main"><div class="route-not-found-card"><span class="route-not-found-code">404</span><h1>Page Not Found</h1><p>The link may be incorrect or the page may have moved.</p><a href="#/home">Go to Home</a></div></section>';
+    window.ColorWinLoader?.ready(app);
+    return;
+  }
   const publicRoute=['#/login','#/register','#/privacy'].includes(current);
   if(!ColorWinAuth.session&&!publicRoute){location.replace('#/login');return;}
   if(ColorWinAuth.session&&['#/login','#/register'].includes(current)){location.replace('#/home');return;}
@@ -662,6 +669,25 @@ function render() {
   else if (isRegister) bindRegister();
   else if (!isPrivacy) bindLogin();
   window.ColorWinLoader?.ready(app);
+}
+
+function isKnownRoute(route) {
+  if(['#/login','#/register','#/privacy','#/home','#/account','#/account/avatar'].includes(route))return true;
+  if(['#/main','#/turntable','#/turntable/history','#/activity/invite-wheel','#/games/pvc'].includes(route))return true;
+  if(window.ColorWinAccount?.matches(route)||window.ColorWinVIP?.matches(route)||window.ColorWinTournaments?.matches(route))return true;
+  if(window.ColorWinWallet?.matches(route)&&(!route.startsWith('#/deposit/pay/')||/^#\/deposit\/pay\/[a-z0-9_-]{1,128}$/i.test(route)))return true;
+  if(window.ColorWinSupport?.matches(route))return true;
+  if(route==='#/activity'||['#/activity/activity-award','#/activity/check-in','#/activity/attendance-bonus','#/activity/rebate','#/activity/rebate-history','#/activity/dailytasks','#/activity/dailysignin','#/activity/dailysignin/rules','#/activity/dailysignin/history','#/activity/super-jackpot','#/activity/super-jackpot/rule','#/activity/super-jackpot/stars'].includes(route)||window.ColorWinActivity?.activityItems.some(item=>item.route===route))return true;
+  if(route==='#/promotion'||/^#\/promotion\/(new|link|rewards|code|subordinates|commission|rules|support|rebate)$/.test(route))return true;
+  const gameParts=route.match(/^#\/games\/([^/]+)(?:\/([^/]+))?$/);
+  if(gameParts){
+    const [,section,id]=gameParts;
+    if(section==='providers'&&!id)return true;
+    if(['all','top-games','popular','mini-games','slots','lottery','fishing','casino','sports','other'].includes(section)&&!id)return true;
+    if(section==='provider'&&id&&window.ColorWinGamesData?.providers.some(provider=>provider.id===id))return true;
+    if(section==='play'&&id&&window.ColorWinGamesData?.gamesCatalog.some(game=>game.id===id||(['aviator','limbo','mines'].includes(id)&&game.name.toLowerCase()===id)))return true;
+  }
+  return false;
 }
 
 window.addEventListener('hashchange', () => { render(); window.scrollTo(0,0); });
@@ -764,7 +790,7 @@ function accountView() {
     <section class="history-grid" id="accountHistory" aria-label="Account history">${history('Game History','history','Game History','My game history','game-history.svg')}${history('Transaction','chart','Transaction','My transaction history','wallet-confirmed.svg')}${history('Deposit History','deposit','Deposit','My deposit history','deposit-history.svg')}${history('Withdraw History','wallet','Withdraw','My withdraw history','withdraw.svg')}</section>
     <section class="account-menu" aria-label="Account options">${[['Notification','bell','message.svg'],['Gifts','gift','gift.svg'],['My Top-Up Coupons','ticket','coupon.svg'],['Game Statistics','chart','statistics.svg'],['Language','globe','language.svg']].map(([name,icon,asset])=>`<button type="button" class="tone-${icon}" data-account-panel="${name}"><span class="menu-icon">${accountIcon(icon,asset)}</span><span>${name}</span>${name==='Language'?'<span class="language-value">English</span>':''}<span class="row-chevron">›</span></button>`).join('')}</section>
     <section class="service-card"><h2 class="service-heading">Service center</h2><div class="service-grid">${action('Settings','settings','Settings','settings.svg')}${action('Feedback','chat','Feedback','feedback.svg')}${action('Announcement','bell','Announcement','announcement.svg')}${action('Customer','user','Customer Service','customer-service.svg')}${action('Guide','guide',"Beginner’s Guide",'about-us.svg')}${action('About us','info','About us','about-us.svg')}</div></section>
-    <button type="button" class="logout-button" id="accountLogout">${accountIcon('logout')}Log out</button><p class="account-preview-note">Wallet services are not connected</p>
+    <button type="button" class="logout-button" id="accountLogout">${accountIcon('logout')}Log out</button>
     </div>${accountTabbar()}<dialog class="account-dialog" id="accountDialog"><div class="dialog-heading"><h2 id="panelTitle"></h2><button type="button" id="closeAccountDialog" aria-label="Close">×</button></div><div id="panelContent"></div></dialog><dialog class="logout-dialog" id="logoutDialog"><div class="logout-warning" aria-hidden="true">!</div><p>Do you want to log out?</p><button type="button" class="logout-confirm" id="confirmLogout">Confirm</button><button type="button" class="logout-cancel" id="cancelLogout">Cancel</button></dialog></section>`;
 }
 

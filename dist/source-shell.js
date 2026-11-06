@@ -1,6 +1,10 @@
 (() => {
  const mounted=new WeakMap();let cachedHome=null;
  const ownerId=()=>window.ColorWinAuth?.session?.user?.id;
+ const gameAliases={'win go':'wingo','wingo':'wingo','wingo 30sec':'wingo','k3':'k3','5d':'5d','trx win go':'trx-wingo','motorace':'moto-racing','mines pro':'100'};
+ const playableGameRoutes={mines:'#/games/play/mines'};
+ const playableGameIds=new Set(['wingo','k3','5d','trx-wingo','fortune-gems','100']);
+ const isPlayableGame=game=>playableGameIds.has(game.id)||['aviator','limbo','mines','boom'].includes(game.name.toLowerCase());
  function cacheValid(){if(cachedHome&&(!cachedHome.root.isConnected||cachedHome.owner!==ownerId())){cachedHome.root.remove();cachedHome=null;}return cachedHome;}
  function renderPage(app,markup,isHome){const cache=cacheValid();if(cache&&!cache.root.classList.contains("source-internal-page")){cache.root.hidden=true;for(const child of [...app.childNodes])if(child!==cache.root)child.remove();app.insertAdjacentHTML("beforeend",markup);}else{app.innerHTML=markup;cachedHome=null;}if(isHome){const root=app.querySelector(".source-frame-page:not([hidden])");if(root)cachedHome={root,owner:ownerId()};}}
  function restoreHome(app){const cache=cacheValid();if(!cache||cache.root.classList.contains("source-internal-page"))return false;for(const child of [...app.childNodes])if(child!==cache.root)child.remove();cache.root.hidden=false;cache.root.querySelector("iframe")?.contentWindow.postMessage({type:"cw-source-resume"},location.origin);return true;}
@@ -24,9 +28,13 @@
     }else if(req.action==='feed'){const rows=[{game:'WinGo',amount:196},{game:'Aviator',amount:2480},{game:'K3',amount:392},{game:'5D',amount:980},{game:'Mines',amount:735},{game:'Limbo',amount:1250}].map((w,i)=>({...w,member:'Member'+[787386,624915,938472,516803,842697,379154][i],demo:true}));const key=name=>String(name).toLowerCase().replace(/[^a-z0-9]/g,'');const art={wingo:'wingo.png',wingo30sec:'wingo.png',trxwingo:'trx-wingo.png',k3:'k3.png','5d':'5d.png'};const covers={aviator:'aviator.png',limbo:'Limbo.png',mines:'mines.png'};const groups=new Map();for(const w of rows){const k=key(w.game);if(!groups.has(k))groups.set(k,[]);groups.get(k).push(w);}const mixed=[];while([...groups.values()].some(g=>g.length))for(const g of groups.values())if(g.length)mixed.push(g.shift());result=mixed.map(w=>{const k=key(w.game),catalog=window.ColorWinGamesData.gamesCatalog;const game=catalog.find(g=>key(g.name)===k);const file=art[k]||(/^wingo/.test(k)?'wingo.png':null);return {...w,image:file?'/assets/colorwin-home/'+file:covers[k]?'/assets/games images/'+covers[k]:game?.image?'/'+game.image.replace(/^\//,''):''};});}
     else if(req.action==='game')result=await gameRequest(req.game,req.operation,req.data||{});
     else if(req.action==='navigate'){
-     if(root.hidden)throw Error('Home is inactive');const route=req.route;if(typeof route!=='string'||!/^#\/(home|activity|promotion|account|deposit|withdraw|support|tournaments|games)(\/|$)/.test(route))throw Error('Invalid route');location.hash=route;return;
+     if(root.hidden)throw Error('Home is inactive');const route=req.route;if(typeof route!=='string'||!/^#\/(home|activity|promotion|account|deposit|withdraw|support|tournaments|games)(\/|$)/.test(route))throw Error('Invalid route');result={handled:true};location.hash=route;
     }else if(req.action==='catalog-game'){
-     const match=window.ColorWinGamesData.gamesCatalog.find(g=>g.name.toLowerCase()===String(req.name).toLowerCase());if(match){location.hash=match.route;return;}throw Error('This game is not available yet');
+     if(root.hidden)throw Error('Home is inactive');
+     const name=String(req.name).trim().toLowerCase(),id=gameAliases[name],match=window.ColorWinGamesData.gamesCatalog.find(g=>id?g.id===id:g.name.toLowerCase()===name);
+     const route=playableGameRoutes[name]||(match&&isPlayableGame(match)?match.route:null);
+     if(!route){window.toast?.('Coming soon');result={handled:true};}
+     else{result={handled:true};location.hash=route;}
     }else throw Error('Unsupported request');
     if(valid())frame.contentWindow.postMessage({type:'cw-source-response',key:req.key,result},location.origin);
    }catch(error){if(valid())frame.contentWindow.postMessage({type:'cw-source-response',key:req.key,error:error.message},location.origin);}

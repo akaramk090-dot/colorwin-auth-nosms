@@ -1,0 +1,116 @@
+[
+  {
+    "source": "team_partner-3967e6ea.svg",
+    "source_sha256": "3967e6ea404018a53448c4c9b762e73a83cad2dfe70ae33a0dad6a2e1100e5e5",
+    "output": "dist/assets/promotion-icons/apk-team-partner.svg",
+    "changes": "CSS color variables resolved to ColorWin purple; geometry preserved"
+  },
+  {
+    "source": "copy_Code-f822e0c9.svg",
+    "source_sha256": "f822e0c9b9851d66a562589f0b0081d519790fc3c8c38b260a3342086d87feb8",
+    "output": "dist/assets/promotion-icons/apk-invitation-code.svg",
+    "changes": "CSS color variables resolved to ColorWin purple; geometry preserved"
+  },
+  {
+    "source": "team_port-aaa6f267.svg",
+    "source_sha256": "aaa6f267fdbd0e19dbed48a2be19e7db23f6ec48e98aeaa3b022a771c2198def",
+    "output": "dist/assets/promotion-icons/apk-team-report.svg",
+    "changes": "CSS color variables resolved to ColorWin purple; geometry preserved"
+  },
+  {
+    "source": "commission-35156794.svg",
+    "source_sha256": "351567944cb2d14c5aa4c9b7b125b035a0113a4b830e9202fe544dadb2e50104",
+    "output": "dist/assets/promotion-icons/apk-commission.svg",
+    "changes": "CSS color variables resolved to ColorWin purple; geometry preserved"
+  },
+  {
+    "source": "invite_reg-0d5bf08a.svg",
+    "source_sha256": "0d5bf08a8cbe562535152035fd7efecc1d6ed3da3edf40d47002aab44a0553f5",
+    "output": "dist/assets/promotion-icons/apk-invitation-rules.svg",
+    "changes": "CSS color variables resolved to ColorWin purple; geometry preserved"
+  },
+  {
+    "source": "server-dcdbd327.svg",
+    "source_sha256": "dcdbd327da5ede8228262ba4d1681e49a7737c057dd4a7e589b324bcccfa94b9",
+    "output": "dist/assets/promotion-icons/apk-service.svg",
+    "changes": "CSS color variables resolved to ColorWin purple; geometry preserved"
+  },
+  {
+    "source": "rebateRatio-626dfee2.svg",
+    "source_sha256": "626dfee208cd7c67dd8df28caea9bb146fc19c61b66cc78a613ec90a2b1902ad",
+    "output": "dist/assets/promotion-icons/apk-rebate-ratio.svg",
+    "changes": "CSS color variables resolved to ColorWin purple; geometry preserved"
+  },
+  {
+    "source": "subordinate-cd303caa.svg",
+    "source_sha256": "cd303caafc0ad26ffd57c2f1e2ce8686c4521438d897f0796cf2caa55486a4a4",
+    "output": "dist/assets/promotion-icons/apk-subordinates.svg",
+    "changes": "CSS color variables resolved to ColorWin purple; geometry preserved"
+  },
+  {
+    "source": "promotionData-cb994829.svg",
+    "source_sha256": "cb9948295e3df4c55afc59dfcaae1e0684027628ac22c10889611ab780eff6b9",
+    "output": "dist/assets/promotion-icons/apk-promotion-data.svg",
+    "changes": "CSS color variables resolved to ColorWin purple; geometry preserved"
+  },
+  {
+    "source": "directSubordinates-bc3b87d9.svg",
+    "source_sha256": "bc3b87d9c9ff4bf1f004351c329750cfe417d66f287ad0689a4324562be06dbb",
+    "output": "dist/assets/promotion-icons/apk-direct.svg",
+    "changes": "CSS color variables resolved to ColorWin purple; geometry preserved"
+  },
+  {
+    "source": "teamSubordinates-72f4f360.svg",
+    "source_sha256": "72f4f360dbbbe3e965597c02da79ece82f386a4bad3f67826af5ef305f0ff6d4",
+    "output": "dist/assets/promotion-icons/apk-team.svg",
+    "changes": "CSS color variables resolved to ColorWin purple; geometry preserved"
+  },
+  {
+    "source": "round-0ce5c8ef.svg",
+    "source_sha256": "0ce5c8ef2e5624a2f2efe88a86e7e1371d08bde10175070cdffa3d6f13a58fb5",
+    "output": "dist/assets/promotion-icons/apk-round.svg",
+    "changes": "CSS color variables resolved to ColorWin purple; geometry preserved"
+  },
+  {
+    "source": "lottery-78c78fe7.svg",
+    "source_sha256": "78c78fe7709f0489376a12f6e95d96cd9188f7ac1e8f4330635675df04174365",
+    "output": "dist/assets/promotion-icons/apk-lottery.svg",
+    "changes": "CSS color variables resolved to ColorWin purple; geometry preserved"
+  },
+  {
+    "source": "video-9680cab0.svg",
+    "source_sha256": "9680cab0b181a88e2cf7a0d43c84b0cc8d0eaf047578d527ddaea2e0990d3d9f",
+    "output": "dist/assets/promotion-icons/apk-casino.svg",
+    "changes": "CSS color variables resolved to ColorWin purple; geometry preserved"
+  },
+  {
+    "source": "sport-c184ce12.svg",
+    "source_sha256": "c184ce12d1c045595567f502644d12e05d7aff870eeaaeac7e9b0d328186fffb",
+    "output": "dist/assets/promotion-icons/apk-sports.svg",
+    "changes": "CSS color variables resolved to ColorWin purple; geometry preserved"
+  },
+  {
+    "source": "chess-ae13cf1a.svg",
+    "source_sha256": "ae13cf1a4bad43dd86dd2b2bc356ed7f106dd54913d74b89055102113503cc2b",
+    "output": "dist/assets/promotion-icons/apk-pvc.svg",
+    "changes": "CSS color variables resolved to ColorWin purple; geometry preserved"
+  },
+  {
+    "source": "slot-e068d026.svg",
+    "source_sha256": "e068d02660905d1fac9a273f68ea3dc9316e9c06571b5471564c3693c18d5cbf",
+    "output": "dist/assets/promotion-icons/apk-slots.svg",
+    "changes": "CSS color variables resolved to ColorWin purple; geometry preserved"
+  },
+  {
+    "source": "copy-41d23b56.svg",
+    "source_sha256": "41d23b56574815aec3f5e46f78874915a0acd46dbc7bd14e6e0be69f03959246",
+    "output": "dist/assets/promotion-icons/apk-copy.svg",
+    "changes": "CSS color variables resolved to ColorWin purple; geometry preserved"
+  },
+  {
+    "source": "ruleHead-e09fed55.svg",
+    "source_sha256": "e09fed552f724fd3af53dda710a4f2ba355022d213de0de6fb3ff2c9cf364ff5",
+    "output": "dist/assets/promotion-icons/apk-rule-head.svg",
+    "changes": "ColorWin palette; original paths preserved"
+  }
+]

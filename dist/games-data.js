@@ -2,6 +2,18 @@
 window.ColorWinGamesData = {
   "gamesCatalog": [
     {
+      "id": "fortune-gems",
+      "name": "Fortune Gems",
+      "image": "games/fortune-card.svg",
+      "category": "slots",
+      "provider": null,
+      "route": "#/games/play/fortune-gems",
+      "popular": false,
+      "topGame": false,
+      "width": 222,
+      "height": 300
+    },
+    {
       "id": "1",
       "name": "Royal Fishing",
       "image": "assets/games images/1.png",

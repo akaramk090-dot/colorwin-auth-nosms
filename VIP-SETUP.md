@@ -6,10 +6,12 @@ The reference was inspected through the browser on 5 October 2026. All ten exper
 
 The settlement countdown uses Asia/Kolkata calendar dates; the reference schedule is 2:00 AM IST on the first day of each month.
 
-## Data integration
+## VIP experience and rewards
 
-This implementation is the VIP UI and programme preview. It does not implement a verified betting ledger, level maintenance, downgrade jobs, rebate accounting, monthly settlement or reward claims. Preview mode shows zero experience. Live accounts show unavailable experience rather than inventing account progress; the programme preview note explains that claiming is pending launch.
+Apply `supabase/vip-rewards.sql` after `supabase/account-setup.sql` and the game wallet setup scripts. Every successful, server-recorded wager inserts one `account_game_records` row; a database trigger credits its stake as VIP experience (₹1 = 1 EXP). Failed/rejected wagers do not earn EXP because their database transaction does not commit. Existing recorded stakes are backfilled once during setup.
 
-When the trusted VIP backend is ready, supply `window.ColorWinVIPProvider.load()` to return the authenticated user's `{experience, history}`. History records have `title`, `amount`, `created_at`. Any claim implementation must validate eligibility and duplicates on the server and credit the wallet atomically; it must not trust the displayed tier or experience from the browser.
+`public.colorwin_vip_data()` returns the signed-in user's experience, claimed levels and reward history. `public.colorwin_vip_claim(level)` checks the experience threshold on the server, permits one claim per level, and writes the claim and wallet ledger entry in the same transaction. The browser never supplies an experience amount or reward amount. Level-up rewards use the amounts shown in the VIP tier list; monthly rewards are informational and are not claimable in this feature.
 
-Validation: syntax checks, VIP route/assets/escaping tests and the existing regression suite. Live visual verification remains pending the saved localhost browser permission.
+Preview accounts remain isolated and cannot claim real wallet rewards. The backend uses private tables with RLS enabled and no client table grants; only authenticated users may execute the two public RPCs.
+
+Verification: run `tests/vip-rewards.sql` in a transaction-capable Supabase SQL session; its synthetic accounts, wagers and wallet entries are rolled back. Run `node --test tests/vip.test.cjs` for VIP UI tests.

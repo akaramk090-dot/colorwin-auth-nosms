@@ -1,59 +1,238 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Avitaro Demo</title><style>
-*{box-sizing:border-box}body{margin:0;background:#0e0e12;color:#eee;font:14px Arial,sans-serif}header{background:#1b1b21;padding:14px;display:flex;justify-content:space-between;align-items:center}.logo{font-size:22px;font-weight:900;font-style:italic;color:#f03751}.wallet{color:#4de36b}button,input{font:inherit}button{cursor:pointer}main{max-width:600px;margin:auto;padding:9px}.history{display:flex;gap:7px;overflow:auto;padding:12px 0}.history span{white-space:nowrap;border-radius:20px;padding:6px 10px;background:#272631;color:#b99cff}.meta{display:flex;justify-content:space-between;color:#aaa;font-size:12px;margin:5px}.game{height:300px;position:relative;overflow:hidden;border:2px solid #38333e;border-radius:22px;background:repeating-conic-gradient(from 0deg at 10% 100%,#29171e 0deg 13deg,#151317 13deg 26deg)}svg{position:absolute;inset:0;width:100%;height:100%}#curve{fill:none;stroke:#f42248;stroke-width:4;stroke-linecap:round}#area{fill:#ed183c;opacity:.3}.multi{position:absolute;top:24%;width:100%;text-align:center;font-size:60px;font-weight:900;text-shadow:0 3px 9px #000;z-index:2}.plane{position:absolute;left:8%;bottom:12%;font-size:66px;color:#f34;z-index:3;will-change:left,bottom,transform}.count{position:absolute;top:58%;width:100%;text-align:center;color:#ffc04e;font-size:22px;font-weight:bold;z-index:4}.bar{height:5px;background:#35343b;margin:9px;border-radius:10px;overflow:hidden}.bar>div{height:100%;background:#f5b04e;width:100%}.panel{background:#1d1e24;border:1px solid #303039;border-radius:13px;margin-top:10px;padding:13px}.tabs{display:flex;width:65%;margin:0 auto 13px;background:#111217;border-radius:25px;overflow:hidden}.tabs button{width:50%;border:0;background:none;color:#999;padding:8px}.tabs .selected{background:#393943;color:white;border-radius:25px}.betrow{display:flex;gap:10px}.left{width:44%}.right{width:56%}.amount{display:flex;align-items:center;justify-content:space-between;border-radius:25px;background:#0e0f12;padding:5px}.amount input{width:55%;min-width:0;text-align:center;color:white;background:none;border:0;outline:none;font-size:18px}.circle{border:1px solid #555;border-radius:50%;background:#272831;color:white;width:29px;height:29px}.quick{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:6px}.quick button{border:0;border-radius:16px;background:#111217;color:#aaa;padding:6px}.action{height:94px;width:100%;border:2px solid #a4e68c;border-radius:23px;color:white;background:linear-gradient(#2bc500,#158b00);font-size:21px;font-weight:bold}.action.cash{background:linear-gradient(#fca526,#ce6c00);border-color:#ffce80}.action.cancel{background:linear-gradient(#f04a56,#aa1b2a);border-color:#ff9b9b}.action:disabled{opacity:.5}.auto{text-align:center;margin-top:10px;color:#aaa}.auto input{width:75px;border:1px solid #555;background:#111;color:white;padding:6px;border-radius:7px}.records{background:#1d1e24;margin-top:13px;padding:12px;border-radius:12px}.record{display:grid;grid-template-columns:1fr 1fr 1fr;padding:10px 0;border-bottom:1px solid #35353d;font-size:12px}.record span:last-child{text-align:right}.green{color:#4cdb6b}.red{color:#ff556a}.notice{text-align:center;color:#888;font-size:11px;padding:16px}.blast{animation:explode .65s ease-out forwards}@keyframes explode{0%{transform:scale(1);opacity:1}55%{transform:scale(2);opacity:1}100%{transform:scale(3);opacity:0}}.flyaway{transition:left .65s ease-in,bottom .65s ease-in,transform .65s ease-in!important;left:120%!important;bottom:115%!important;transform:rotate(-25deg) scale(.7)}
-header .sound{background:#333;color:#fff;border:1px solid #555;border-radius:8px;padding:6px;margin-left:6px}body{overflow-x:hidden}button:focus-visible,input:focus-visible{outline:2px solid #67b6ff;outline-offset:2px}@media(max-width:350px){main{padding:6px}.panel{padding:9px}.betrow{gap:6px}.action{font-size:17px}.circle{width:24px;height:24px}.amount input{font-size:15px}}</style></head><body><header><div class="logo">✈ AVIATOR</div><div class="wallet">₹<span id="balance">—</span>  <button class="sound" id="soundBtn" onclick="toggleSound()">🔊</button></div></header><main><div class="history" id="history"></div><div class="meta"><span>Round #<span id="roundId"></span></span><span id="phase">Waiting</span></div><div class="game" id="game"><svg viewBox="0 0 400 300" preserveAspectRatio="none"><path id="area"/><path id="curve"/></svg><div class="multi" id="multi">1.00x</div><div class="plane" id="plane">✈</div><div class="count" id="count"></div></div><div class="bar"><div id="progress"></div></div><div id="panels"></div><div class="records"><b>My Bets</b><div class="record"><span>Bet INR</span><span>Multiplier</span><span>Cash Out INR</span></div><div id="records"></div></div><div class="notice">Color Win wallet · Bet ₹1–₹10,000 · Server-generated rounds</div></main><script src="arcade-client.js?v=1"></script><script>const $=id=>document.getElementById(id);
-let audioCtx=null,soundOn=true,engine=null,engineGain=null,engineNoise=null,engineFilter=null,lastBeep=-1;
-function initAudio(){if(!soundOn)return;try{audioCtx=audioCtx||new (window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==='suspended')audioCtx.resume()}catch(e){}}
-document.addEventListener('pointerdown',initAudio,{passive:true});
-function tone(freq,duration=.12,type='sine',volume=.065,slide=null){if(!soundOn||!audioCtx)return;let o=audioCtx.createOscillator(),g=audioCtx.createGain(),t=audioCtx.currentTime;o.type=type;o.frequency.setValueAtTime(freq,t);if(slide)o.frequency.exponentialRampToValueAtTime(Math.max(1,slide),t+duration);g.gain.setValueAtTime(volume,t);g.gain.exponentialRampToValueAtTime(.001,t+duration);o.connect(g).connect(audioCtx.destination);o.start(t);o.stop(t+duration+.02)}
-function noiseBurst(duration=.5,volume=.13,from=1800,to=120){
- if(!soundOn||!audioCtx)return;
- const rate=audioCtx.sampleRate,buf=audioCtx.createBuffer(1,Math.ceil(rate*duration),rate),data=buf.getChannelData(0);
- for(let i=0;i<data.length;i++)data[i]=(Math.random()*2-1);
- let src=audioCtx.createBufferSource(),f=audioCtx.createBiquadFilter(),g=audioCtx.createGain(),t=audioCtx.currentTime;
- src.buffer=buf;f.type='lowpass';f.frequency.setValueAtTime(from,t);f.frequency.exponentialRampToValueAtTime(Math.max(40,to),t+duration);
- g.gain.setValueAtTime(.001,t);g.gain.linearRampToValueAtTime(volume,t+.025);g.gain.exponentialRampToValueAtTime(.001,t+duration);
- src.connect(f).connect(g).connect(audioCtx.destination);src.start(t);src.stop(t+duration);
-}
-function whoosh(){
- if(!soundOn||!audioCtx)return;
- const t=audioCtx.currentTime;
- const o=audioCtx.createOscillator(),g=audioCtx.createGain();
- o.type='sine';o.frequency.setValueAtTime(220,t);
- o.frequency.exponentialRampToValueAtTime(720,t+.45);
- g.gain.setValueAtTime(.0001,t);
- g.gain.exponentialRampToValueAtTime(.035,t+.12);
- g.gain.exponentialRampToValueAtTime(.0001,t+.58);
- o.connect(g).connect(audioCtx.destination);o.start(t);o.stop(t+.6);
-}
-function explosion(){
- if(!soundOn||!audioCtx)return;
- const t=audioCtx.currentTime;
- const o=audioCtx.createOscillator(),g=audioCtx.createGain();
- o.type='sine';o.frequency.setValueAtTime(105,t);
- o.frequency.exponentialRampToValueAtTime(34,t+.48);
- g.gain.setValueAtTime(.0001,t);
- g.gain.exponentialRampToValueAtTime(.085,t+.035);
- g.gain.exponentialRampToValueAtTime(.0001,t+.65);
- o.connect(g).connect(audioCtx.destination);o.start(t);o.stop(t+.68);
-}
-function startEngine(){
- // No continuous oscillator: avoids buzzing and crackling on phones.
- if(!soundOn||!audioCtx)return;
- tone(330,.22,'sine',.035,440);
- setTimeout(()=>tone(494,.28,'sine',.028,660),140);
-}
-function stopEngine(){}
-function toggleSound(){soundOn=!soundOn;$('soundBtn').textContent=soundOn?'🔊':'🔇';if(soundOn){initAudio();tone(660)}else stopEngine()}
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#1b1c1d"><title>Aviator · Color Win</title><link rel="stylesheet" href="aviator.css?v=live-bar-11"></head>
+<body>
+<div class="aviator-intro" id="intro" role="status" aria-label="Loading Aviator"><div class="intro-brand"><strong>Aviator</strong><img class="spribe-logo" src="aviator-spribe.svg" alt="SPRIBE"></div><div class="intro-progress" id="intro-progress" role="progressbar" aria-label="Loading game" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i></div><output id="intro-percent">0%</output><small id="intro-status">Connecting to the shared round…</small></div>
+<header class="game-header"><a class="brand" href="#" id="home" aria-label="Back to Color Win"><span>Aviator</span></a><button id="help" class="help-button" aria-label="How to play">?</button><div class="header-right"><span class="wallet"><b id="balance">—</b> <small>INR</small></span><button id="sound" class="icon-button" aria-label="Mute sound" aria-pressed="true"><svg viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4V5Zm4 3a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"/></svg></button><button id="menu" class="icon-button" aria-label="Game settings" aria-expanded="false"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button></div></header>
+<aside id="settings-menu" class="settings-menu" aria-label="Game settings" hidden><header><span class="profile-icon">CW</span><strong>Color Win player</strong></header><div class="audio-settings"><label><span>♬ &nbsp;Sound</span><input id="effects-toggle" type="checkbox" checked></label><label><span>♫ &nbsp;Music</span><input id="background-music" type="checkbox" checked></label><label><span>◌ &nbsp;Animation</span><input id="animation-toggle" type="checkbox" checked></label><label class="volume-row">Volume<input id="audio-volume" type="range" min="0" max="1" step=".05" value=".65"></label></div><button id="my-history">↶ &nbsp;My Bet History</button><button id="limits">▣ &nbsp;Game Limits / Help</button><small>Sound starts after your first tap.</small></aside>
+<main class="layout"><section class="play-area" aria-label="Aviator game">
+<div class="history-bar"><div id="history" class="history" aria-label="Recent shared round multipliers"></div><button class="history-toggle icon-button" id="history-toggle" aria-label="Expand your round history" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button></div>
+<div class="round-meta"><span id="round-meta-id">Round ID: —</span><span id="ping">Connecting…</span></div>
+<section id="history-popup" class="history-popup" aria-label="Round history" hidden><header>LAST 50 ROUNDS<button id="history-close" aria-label="Close round history">×</button></header><div id="history-grid"></div></section>
+<div class="stage" id="stage" data-phase="connecting"><div class="rays"></div><div class="grid-bottom"></div><div class="grid-side"></div><svg class="flight-chart" viewBox="0 0 600 340" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="flight-fill" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#e71546" stop-opacity=".7"/><stop offset="1" stop-color="#e71546" stop-opacity=".06"/></linearGradient></defs><path id="area" fill="url(#flight-fill)"/><path id="curve" fill="none" stroke="#e91948" stroke-width="4" vector-effect="non-scaling-stroke"/></svg>
+<div class="stage-readout"><div class="flew-label">FLEW AWAY!</div><div class="multiplier" id="multiplier">1.00<span>x</span></div></div>
+<div class="waiting"><figure class="waiting-brand-art"><img src="aviator-partner-art.png" alt="Supplied UFC, Aviator and SPRIBE artwork"><div class="art-progress" id="waiting-progress" role="progressbar" aria-label="Next round preparation" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100"><i id="progress"></i></div></figure><small class="waiting-version">Color Win version · Independent game</small><p id="countdown">Preparing your round…</p></div>
+<div id="plane" class="plane" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg"
+     width="663" height="461" viewBox="0 0 663 461"
+     fill="none" role="img" aria-label="Detailed red airplane">
+  <defs>
+    <linearGradient id="body" x1="150" y1="410" x2="490" y2="170"
+                    gradientUnits="userSpaceOnUse">
+      <stop stop-color="#BB1420"/>
+      <stop offset=".4" stop-color="#F32729"/>
+      <stop offset=".75" stop-color="#FF4035"/>
+      <stop offset="1" stop-color="#FF6350"/>
+    </linearGradient>
 
-let balance=null,multi=1,state='waiting',server=null,busy=false,lastUpdate=0,offset=0;const bets=[{amount:10,auto:false,target:2},{amount:10,auto:false,target:2}],keys=[null,null];const money=n=>Number(n).toFixed(2);
-function error(t){$('phase').textContent=t;}
-function entry(i){return server?.bets?.find(b=>b.slot===i&&b.status!=='cancelled');}
-function renderPanels(){$('panels').innerHTML=bets.map((b,i)=>`<div class="panel"><div class="tabs"><button onclick="setAuto(${i},false)" class="${!b.auto?'selected':''}">Bet</button><button onclick="setAuto(${i},true)" class="${b.auto?'selected':''}">Auto</button></div><div class="betrow"><div class="left"><div class="amount"><button class="circle" onclick="changeAmount(${i},-10)">−</button><input id="amount${i}" type="number" min="1" max="10000" value="${b.amount}" onchange="setAmount(${i},this.value)"><button class="circle" onclick="changeAmount(${i},10)">+</button></div><div class="quick">${[10,100,500,1000].map(n=>`<button onclick="quickAmount(${i},${n})">${n}</button>`).join('')}</div></div><div class="right"><button class="action" id="action${i}" onclick="action(${i})">BET</button></div></div>${b.auto?`<div class="auto">Auto Cash Out <input type="number" min="1.01" max="50" step=".01" value="${b.target}" onchange="setTarget(${i},this.value)"> x</div>`:''}</div>`).join('');update();}
-function setAuto(i,v){if(entry(i)?.status==='active'||busy)return;bets[i].auto=v;renderPanels();}function setTarget(i,v){if(entry(i)?.status==='active'||busy)return;bets[i].target=Math.min(50,Math.max(1.01,Number(v)||2));}function setAmount(i,v){if(entry(i)?.status==='active'||busy)return;bets[i].amount=Math.min(10000,Math.max(1,Number(v)||1));}function changeAmount(i,d){setAmount(i,bets[i].amount+d);renderPanels();}function quickAmount(i,n){setAmount(i,n);renderPanels();}
-function update(){$('balance').textContent=balance===null?'—':money(balance);$('multi').textContent=multi.toFixed(2)+'x';for(let i=0;i<2;i++){const b=entry(i),btn=$('action'+i);if(!btn)continue;btn.className='action';btn.disabled=busy||!server;const input=$('amount'+i);input.disabled=busy||b?.status==='active';if(b?.status==='cashed'){btn.textContent='CASHED OUT';btn.disabled=true;}else if(state==='waiting'){btn.innerHTML=(b?.status==='active'?'CANCEL<br>':'BET<br>')+money(b?.amount||bets[i].amount)+' INR';if(b?.status==='active')btn.classList.add('cancel');}else if(state==='flying'&&b?.status==='active'){btn.classList.add('cash');btn.innerHTML='CASH OUT<br>'+money(b.amount*multi)+' INR';}else{btn.textContent='WAIT';btn.disabled=true;}}}
-function paint(d){balance=Number(d.balance);if(server?.id!==d.round.id){keys[0]=null;keys[1]=null;}server=d.round;for(const b of server.bets||[])if(b.status!=='cancelled')keys[b.slot]=null;offset=new Date(server.now).getTime()-Date.now();state=server.phase;multi=Number(server.multiplier);$('roundId').textContent=server.id.slice(0,8);$('phase').textContent=state==='waiting'?'Place your bets':state==='flying'?'Flying':'FLEW AWAY';$('multi').style.color=state==='crashed'?'#ff3555':'white';$('count').style.display=state==='flying'?'none':'block';$('count').textContent=state==='waiting'?'Starting in '+Math.max(0,Math.ceil((new Date(server.starts_at).getTime()-Date.now()-offset)/1000))+'s':'FLEW AWAY';$('records').innerHTML=(d.history||[]).map(r=>'<div class="record"><span>'+money(r.amount)+'</span><span class="'+(r.payout?'green':'red')+'">'+(r.payout?Number(r.result).toFixed(2)+'x':'Lost')+'</span><span>'+money(r.payout)+'</span></div>').join('');$('history').innerHTML=(d.history||[]).slice(0,15).map(r=>'<span>'+Number(r.result).toFixed(2)+'x</span>').join('');update();}
-async function request(action,data={}){if(busy)return;busy=true;update();try{paint(await CWArcade('aviator',action,data));if(action==='bet')keys[data.slot]=null;}catch(e){error(e.message);}finally{busy=false;update();}}
-function action(i){if(busy||!server)return;const b=entry(i);if(state==='waiting'&&b?.status==='active')request('cancel',{id:b.id});else if(state==='flying'&&b?.status==='active')request('cash',{id:b.id});else if(state==='waiting'){const amount=Number($('amount'+i).value);if(!Number.isFinite(amount)||amount<1||amount>10000||amount>balance){error('Invalid amount or insufficient wallet balance');return;}keys[i]=keys[i]||crypto.randomUUID();request('bet',{flight_id:server.id,slot:i,amount,auto_target:bets[i].auto?bets[i].target:null,request_id:keys[i]});}}
-function animate(){if(server){const elapsed=Math.max(0,(Date.now()+offset-new Date(server.starts_at).getTime())/1000),p=state==='waiting'?0:Math.min(elapsed/18,.95);if(state==='flying')multi=Math.floor(Math.exp(elapsed*.18)*100)/100;const plane=$('plane');plane.style.left=8+p*75+'%';plane.style.bottom=12+Math.pow(p,.72)*65+'%';const x=32+p*300,y=264-Math.pow(p,.72)*195,path=`M32 264 Q${x*.55} 260 ${x} ${y}`;$('curve').setAttribute('d',path);$('area').setAttribute('d',path+` L${x} 264 L32 264 Z`);if(state==='waiting'){$('count').textContent='Starting in '+Math.max(0,Math.ceil(-elapsed+(new Date(server.starts_at).getTime()-Date.now()-offset)/1000))+'s';$('progress').style.width=Math.max(0,Math.min(100,(new Date(server.starts_at).getTime()-Date.now()-offset)/100))+'%';}update();}requestAnimationFrame(animate);}
-renderPanels();request('load');setInterval(()=>{if(!document.hidden)request('load');},500);requestAnimationFrame(animate);
-</script></body></html>
+    <linearGradient id="blade" x1="-15" y1="0" x2="16" y2="0"
+                    gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8F171D"/>
+      <stop offset=".2" stop-color="#D72627"/>
+      <stop offset=".48" stop-color="#FF5945"/>
+      <stop offset=".7" stop-color="#F3352B"/>
+      <stop offset="1" stop-color="#9F1920"/>
+    </linearGradient>
+
+    <linearGradient id="hub" x1="557" y1="155" x2="598" y2="180"
+                    gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FF9473"/>
+      <stop offset=".35" stop-color="#FF4E37"/>
+      <stop offset=".7" stop-color="#D92725"/>
+      <stop offset="1" stop-color="#85151C"/>
+    </linearGradient>
+
+    <linearGradient id="edge" x1="170" y1="245" x2="425" y2="270"
+                    gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FF9A7C"/>
+      <stop offset="1" stop-color="#FFD0AD"/>
+    </linearGradient>
+
+    <!-- One blade, duplicated around a shared mechanical axis -->
+    <g id="propeller-blade">
+      <path d="M-6-5
+               C-10-24-15-51-15-80
+               C-15-111-11-139-5-152
+               Q-2-160 2-152
+               C10-133 15-108 14-82
+               C13-54 7-25 6-5Z"
+            fill="url(#blade)"
+            stroke="#8F2021" stroke-width="2"
+            stroke-linejoin="round"/>
+
+      <!-- Leading-edge reflection -->
+      <path d="M-4-148
+               C-10-124-11-101-10-78
+               C-9-54-6-31-3-16"
+            stroke="#FF9A73" stroke-width="2"
+            stroke-linecap="round" opacity=".8"/>
+
+      <!-- Blade face -->
+      <path d="M0-142
+               C8-119 10-99 8-79
+               C7-59 3-38 2-26
+               C0-60 2-103 0-142Z"
+            fill="#FF674B" opacity=".55"/>
+
+      <!-- Dark tip detail follows the blade curvature -->
+      <path d="M-3-151
+               Q0-157 3-146
+               Q9-128 11-111
+               Q3-127-3-151Z"
+            fill="#771820" opacity=".85"/>
+
+      <path d="M-6-10 6-10 5-1-5-1Z"
+            fill="#A32022"/>
+    </g>
+  </defs>
+
+  <!-- Airframe -->
+  <path fill="url(#body)" fill-rule="evenodd"
+        stroke="#AD2525" stroke-width="2.2"
+        stroke-linejoin="round"
+        d="
+        M15 385
+        L16 371 48 353 49 347 21 359 22 351
+        Q46 333 59 333
+        Q68 332 79 343
+        L119 367 Q138 379 154 367
+        L247 311 252 306 246 306
+        L194 333 205 318 202 308 146 338
+        L150 316 202 285 204 280 198 277
+        L179 284 154 261 176 244
+        Q185 238 203 240
+        L424 253 Q436 253 433 265
+        Q451 278 467 269
+        L550 221 559 227 564 222
+        L535 158 Q531 151 522 156
+        L417 200 375 225 359 236 305 237
+        L305 226 Q308 214 324 206
+        L371 174 Q385 167 399 173
+        L413 179 Q425 181 438 175
+        L515 147 Q538 140 548 150
+        Q570 182 579 215
+        Q583 231 575 240
+        L542 263 Q497 292 437 316
+        L145 437 109 449 98 440 88 442 80 434
+        Q84 429 98 426
+        L218 378 365 314 432 286
+        L412 285 398 289 389 295 379 296
+        L258 357 241 347 112 411
+        L111 402 128 389 109 385 67 368
+        Q60 365 60 375
+        L96 413 87 417 44 375 Z
+
+        M204 247
+        L408 273 Q423 275 426 260 Z
+
+        M327 214
+        L339 201 359 190
+        Q370 186 381 192
+        L346 216 Z
+
+        M380 178
+        Q387 174 396 179
+        L415 186 389 205 383 202
+        L399 190 382 185
+        Q375 182 380 178 Z"/>
+
+  <!-- Lower fuselage bevel -->
+  <path d="M91 434
+           Q220 388 365 327
+           Q495 278 568 234"
+        stroke="#951B24" stroke-width="4"
+        stroke-linecap="round" opacity=".6"/>
+
+  <!-- Wing edge highlight -->
+  <path d="M181 245
+           Q194 242 212 245
+           L421 257"
+        stroke="url(#edge)" stroke-width="2.8"
+        stroke-linecap="round"/>
+
+  <path d="M164 261 181 277"
+        stroke="#FF7760" stroke-width="2"
+        stroke-linecap="round"/>
+
+  <!-- Cowling and cockpit rim -->
+  <path d="M311 226
+           Q314 216 328 210
+           L375 179 Q385 173 398 179"
+        stroke="#FF8B71" stroke-width="2"
+        stroke-linecap="round"/>
+
+  <path d="M443 177 518 151
+           Q533 146 541 154"
+        stroke="#FFAD87" stroke-width="2.3"
+        stroke-linecap="round"/>
+
+  <!-- Side markings -->
+  <path d="M385 236 462 198 477 213 461 245Z"
+        fill="#F6322B"/>
+  <path d="m474 189 12-6 3 9 11-23-5 33
+           15 17-7 4-10-7-7 18-12 5 11-29Z"
+        fill="#E92525" stroke="#B72B27" stroke-width="1.4"/>
+
+  <!-- Tail surface detail -->
+  <path d="M28 350 Q50 336 60 339
+           Q65 339 73 345"
+        stroke="#FF7963" stroke-width="2"
+        stroke-linecap="round"/>
+  <path d="m51 376 34 34"
+        stroke="#8F1D25" stroke-width="2"
+        opacity=".55"/>
+
+  <!-- Nose collar behind propeller -->
+  <path d="M548 159
+           Q559 155 567 161
+           L579 186
+           Q576 195 568 199Z"
+        fill="#B92727" stroke="#8F2021" stroke-width="2"/>
+  <path d="m554 162 16 29"
+        stroke="#FF8B66" stroke-width="3"
+        stroke-linecap="round"/>
+
+  <!-- Balanced two-blade propeller, tilted to match reference -->
+  <g transform="translate(579 169) rotate(-25)"><g class="plane-propeller-rotor">
+    <use href="#propeller-blade"/>
+    <use href="#propeller-blade" transform="rotate(180)"/>
+
+    <!-- Blade root mounting plate -->
+    <ellipse rx="12" ry="15"
+             fill="#912029" stroke="#641820" stroke-width="2"/>
+    <ellipse rx="8" ry="11" fill="#E83B30"/>
+  </g>
+
+  </g>
+
+  <!-- Spinner projects forward along the fuselage axis -->
+  <path d="M563 159
+           Q568 153 577 154
+           L600 155
+           Q606 157 602 162
+           L582 180
+           Q577 184 572 177Z"
+        fill="url(#hub)"
+        stroke="#9C2023" stroke-width="2"
+        stroke-linejoin="round"/>
+
+  <path d="M568 158 Q581 155 598 158"
+        stroke="#FFC09A" stroke-width="2"
+        stroke-linecap="round"/>
+
+  <path d="m577 177 21-17-19 8Z"
+        fill="#B22223" opacity=".75"/>
+
+  <!-- Small nose fasteners -->
+  <g fill="#8E2023">
+    <circle cx="552" cy="172" r="1.5"/>
+    <circle cx="558" cy="184" r="1.5"/>
+    <circle cx="564" cy="196" r="1.5"/>
+  </g>
+</svg></div>
+<div class="stage-footer"><span id="round-label">Color Win</span><span class="connection" id="connection"><i></i> Connecting</span></div>
+</div><div id="announcement" class="cash-announcement" role="status" aria-live="polite" hidden></div>
+<div class="bet-panels" id="panels"></div><div class="game-note">Color Win game · Server-settled bets · ₹1–₹10,000</div>
+<div id="error" class="error" role="alert" hidden><span></span><button id="retry">Reconnect</button></div>
+</section>
+<aside class="bets-board"><div class="board-tabs"><button class="selected" data-record-view="live">All Bets</button><button data-record-view="all">My Bets</button><button data-record-view="top">Top</button></div><div class="board-summary"><span id="record-title">ALL BETS</span><span id="record-count">0</span></div><div class="record-head"><span>Bet INR</span><span>Multiplier</span><span>Cash out INR</span></div><div id="records"></div></aside></main>
+<dialog id="info"><button class="close" id="info-close" aria-label="Close information">×</button><h2>How to play</h2><p>Place one or two bets before take-off. Cash out while the plane is flying to collect your bet multiplied by the current coefficient. If it flies away before cash-out, the bet is lost.</p><p>In Auto, enable Auto Cash Out and set a target before placing your bet. The server settles the bet at that target if it is reached.</p><p class="disclosure">This is Color Win’s own crash game. It is not connected to SPRIBE’s Aviator service. All players share the same server-timed round and crash result. Wallet transactions are handled by Color Win. Queued bets run only while this screen remains open.</p></dialog>
+<script src="arcade-client.js?v=http-uuid-2"></script><script src="aviator-audio.js?v=recording-2"></script><script src="aviator.js?v=live-bar-11"></script></body></html>

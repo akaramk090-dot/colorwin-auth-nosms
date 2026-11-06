@@ -8,7 +8,7 @@
   const copyIcon='<svg viewBox="0 0 24 24"><rect x="8" y="3" width="13" height="14" rx="2"/><path d="M16 17v4H3V7h5"/></svg>';
   const searchIcon='<svg viewBox="0 0 24 24"><circle cx="10" cy="10" r="7"/><path d="m15 15 6 6"/></svg>';
   const categories=[['lottery','Lottery','◈'],['popular','Popular','★'],['mini-games','Mini Games','✦'],['slots','Slots','▥'],['fishing','Fishing','≈'],['casino','Casino','♠'],['sports','Sports','⚑'],['other','More Games','⊞']];
-  const rates=[['0.6','0.18','0.054','0.0162','0.00486','0.001458'],['0.7','0.245','0.08575','0.030012','0.010504','0.003677'],['0.75','0.28125','0.105469','0.039551','0.014832','0.005562'],['0.8','0.32','0.128','0.0512','0.02048','0.008192'],['0.85','0.36125','0.153531','0.065251','0.027732','0.011786'],['0.9','0.405','0.18225','0.082013','0.036906','0.016608']];
+  const rates=Array.from({length:6},()=>Array(6).fill(null)); // Numeric rates require the user's verified server table.
   const levels=[['L0','0','0','0'],['L1','10','500K','100K'],['L2','15','1,000K','200K'],['L3','30','2.50M','500K'],['L4','45','3.50M','700K'],['L5','50','5M','1,000K'],['L6','60','10M','2M'],['L7','100','100M','20M'],['L8','500','500M','100M'],['L9','1000','1,000M','200M'],['L10','5000','1,500M','300M']];
   const rules=[
     'There are 6 subordinate levels. If A invites B, B is a level 1 subordinate of A. If B invites C, C is level 1 of B and level 2 of A. If C invites D, D is level 1 of C, level 2 of B and level 3 of A.',

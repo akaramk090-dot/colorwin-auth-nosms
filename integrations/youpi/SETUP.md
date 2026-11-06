@@ -1,6 +1,6 @@
 # Color Win + YouPI PC test setup
 
-Current gateway: https://ensure-exp-registered-revisions.trycloudflare.com
+Current gateway: https://ranked-unfortunately-qualification-tobacco.trycloudflare.com
 Private phone pairing: http://127.0.0.1:7101
 Local admin: http://127.0.0.1:6001
 Receiving UPI: akaramk090-1@oksbi
@@ -99,7 +99,7 @@ Manage 1–10 unique UPI IDs at http://127.0.0.1:7101/receivers. This loopback-o
 
 UPI-QR, UMoney (innate), and Paytm now use the same gateway reserve/verify/credit backend. Their saved method and checkout themes remain distinct. `supabase/youpi-deposit-channels.sql` adds an owner-scoped, method-validated reservation RPC; legacy UPI reservation remains available. Edge function version 5 is deployed. No wallet credit logic was loosened.
 
-Public testing tunnel restarted at https://munich-engineers-celebrities-allocation.trycloudflare.com. The phone must scan a fresh pairing QR to reach the new URL. Both receiving accounts send alerts to the same paired phone, as confirmed by the owner. Second-UPI real transfer verification remains untested; isolated pool/routing tests and rollback SQL channel tests passed.
+Public testing tunnel: https://ranked-unfortunately-qualification-tobacco.trycloudflare.com. The phone must scan a fresh pairing QR to reach the current URL. Both receiving accounts send alerts to the same paired phone, as confirmed by the owner. Second-UPI real transfer verification remains untested; isolated pool/routing tests and rollback SQL channel tests passed.
 
 
 ## Second-UPI receiver pin and Paytm notification capture fixes (22 October 2026)

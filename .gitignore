@@ -58,3 +58,6 @@ local.properties
 /integrations/youpi/gateway/assets/Mobile.mp4
 # Separate repository accidentally created inside this project.
 /colorwin/
+
+# Private screen-recording analysis frames and raw mixed audio.
+/reference-home/aviator-reference/

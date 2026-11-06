@@ -160,6 +160,7 @@
   }
   async function logout(){requireClient();busy=true;try{const {error}=await client.auth.signOut({scope:'local'});if(error)throw error;session=null;profile=null;}finally{busy=false;}notify();}
   async function promotion(){requireClient();const {data,error}=await client.rpc("colorwin_promotion");if(error)throw new Error("Promotion unavailable. Check database setup or retry.");return data;}
+  async function promotionReport({date,tier=0,uid='',page=1}={}){requireClient();const {data,error}=await client.rpc('colorwin_promotion_report',{p_day:date,p_tier:tier,p_uid:uid,p_page:page});if(error)throw new Error('Subordinate data could not be loaded. Please retry.');return data;}
   async function depositNotices(){requireClient();if(!session)return [];const {data,error}=await client.from('account_notifications').select('id,title,message,created_at').eq('user_id',session.user.id).eq('kind','deposit').eq('title','Deposit successful').order('created_at',{ascending:false}).limit(20);if(error)throw new Error(error.message);return data||[];}
   async function accountRpc(name,args={}){requireClient();const {data,error}=await client.rpc(name,args);if(error)throw new Error(error.message);return data;}
   async function setNickname(name){const result=await accountRpc('colorwin_set_nickname',{p_name:name});await fetchProfile();return result;}
@@ -179,6 +180,6 @@
   async function supportUpload(path,file){requireClient();const {error}=await client.storage.from('cw_support_files').upload(path,file,{upsert:false,contentType:file.type});if(error)throw new Error(error.message);}
   async function supportRemove(paths){requireClient();const {error}=await client.storage.from('cw_support_files').remove(paths);if(error)throw new Error(error.message);}
   async function supportUrl(path){requireClient();const {data,error}=await client.storage.from('cw_support_files').createSignedUrl(path,120);if(error)throw new Error(error.message);return data.signedUrl;}
-  window.ColorWinAuth={depositNotices,supportUpload,supportRemove,supportUrl,refreshUser,accountRpc,setNickname,changePassword,sendEmailChange,confirmEmailChange,promotion,init,authenticate,authenticateEmail,verify,logout,get ready(){return ready;},get session(){return session;},get profile(){return profile;},get profileError(){return profileError;},get configured(){return configured&&!!client;}};
+  window.ColorWinAuth={depositNotices,supportUpload,supportRemove,supportUrl,refreshUser,accountRpc,setNickname,changePassword,sendEmailChange,confirmEmailChange,promotion,promotionReport,init,authenticate,authenticateEmail,verify,logout,get ready(){return ready;},get session(){return session;},get profile(){return profile;},get profileError(){return profileError;},get configured(){return configured&&!!client;}};
 })();
 

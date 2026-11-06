@@ -71,8 +71,11 @@
     if(page.querySelector('#ac-list')||page.querySelector('#ac-stats'))try{await load();if(route.includes('/statistics'))await statLoad();paint();}catch{toast('Account records could not be loaded. Please retry.',true);}
   }
   async function refreshBalance(){const requested=user();await load();if(user()!==requested)return;document.querySelectorAll('.balance-value,.wallet-overview>strong,.wallet-rings>div:first-child>b,.home-balance-value,[data-tn-wallet-value]').forEach(e=>e.textContent=money(balance()));document.querySelectorAll('.wallet-balance strong').forEach(e=>{if(e.firstChild?.nodeType===Node.TEXT_NODE)e.firstChild.textContent=money(balance())+' ';});}
-  window.ColorWinAccount={routes,matches:r=>Object.values(routes).some(v=>r===v&&v.startsWith("#/account/"))||/^#\/account\/(settings|about)\//.test(r),view,bind,load,balance,nickname,refreshBalance};
+  const accountSubroutes=new Set([
+    '#/account/settings/nickname','#/account/settings/password','#/account/settings/email','#/account/settings/recovery',
+    '#/account/about/confidentiality','#/account/about/risk'
+  ]);
+  window.ColorWinAccount={routes,matches:r=>Object.values(routes).some(v=>r===v&&v.startsWith("#/account/"))||accountSubroutes.has(r),view,bind,load,balance,nickname,refreshBalance};
 })();
-
 
 

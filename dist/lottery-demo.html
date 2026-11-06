@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#100c20">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; base-uri 'none'; form-action 'self'; frame-src 'none'">
+  <title>Lottery Result Demo · Color Win</title>
+  <link rel="icon" href="assets/icons/admin-push.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="lottery-demo.css">
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <a class="back-link" href="lottery-status.html">← Lottery Status</a>
+      <span class="topbar-divider"></span>
+      <div><strong>Result Demo</strong><small>Local simulation only</small></div>
+    </header>
+    <main>
+      <section class="warning" role="note">
+        <strong>DEMO ONLY — REAL RESULTS ARE NOT CHANGED</strong>
+        <p>Yahan result select karke sirf local preview dikhega. Yeh page live lottery, bets, wallet, payout ya database ko access/change nahi karta.</p>
+      </section>
+
+      <section class="panel" aria-labelledby="setup-title">
+        <span class="eyebrow">SIMULATION SETUP</span>
+        <h1 id="setup-title">Choose demo result</h1>
+        <div class="fields">
+          <label>Game
+            <select id="game">
+              <option value="wingo">WinGo</option>
+              <option value="trx-wingo">TRX</option>
+              <option value="k3">K3</option>
+              <option value="5d">5D</option>
+            </select>
+          </label>
+          <label>Demo period
+            <input id="period" type="text" maxlength="24" value="DEMO-0001" autocomplete="off">
+          </label>
+        </div>
+        <p id="format-help" class="muted">WinGo result ek digit hota hai. 0–9 mein se choose karein.</p>
+        <div id="digit-fields" class="digit-fields" aria-label="Result digits"></div>
+        <div id="number-pad" class="number-pad" role="group" aria-label="Choose a result digit"></div>
+        <div class="actions">
+          <button id="clear" class="secondary" type="button">Clear</button>
+          <button id="show-result" class="primary" type="button">Show demo result</button>
+        </div>
+        <p id="input-error" class="error" role="alert" hidden></p>
+      </section>
+
+      <section id="result-card" class="panel result-card" aria-live="polite" hidden>
+        <span class="eyebrow">SIMULATED RESULT · NOT PUBLISHED</span>
+        <h2 id="result-game">WinGo</h2>
+        <p>Demo period: <strong id="result-period"></strong></p>
+        <div id="result-digits" class="result-digits"></div>
+        <p class="muted">Yeh result sirf is browser tab mein preview hai. Live game ya kisi player ke payment par iska koi asar nahi.</p>
+      </section>
+    </main>
+  </div>
+  <script src="lottery-demo.js"></script>
+</body>
+</html>
